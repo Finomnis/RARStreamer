@@ -57,11 +57,13 @@ QString rarHeaderErrorToString(const T &error)
 namespace unrarhelpers_impl
 {
 template<typename T, typename U>
-T parseArchiveFlag(const T &flags, std::set<QString> &parsedFlags, U flag, QString name)
+T parseArchiveFlag(const T &flags, QString &result, U flag, QString name)
 {
     if ((flags & flag) == flag)
     {
-        parsedFlags.insert(name);
+        if (!result.isEmpty())
+            result += " | ";
+        result += name;
         return flags & ~flag;
     }
     return flags;
@@ -69,26 +71,28 @@ T parseArchiveFlag(const T &flags, std::set<QString> &parsedFlags, U flag, QStri
 }
 
 template<typename T>
-std::set<QString> parseArchiveFlags(const T &flags_in)
+QString parseArchiveFlags(const T &flags_in)
 {
     T flags = flags_in;
 
-    std::set<QString> parsedFlags;
+    QString result;
 
-    flags = unrarhelpers_impl::parseArchiveFlag(flags, parsedFlags, ROADF_VOLUME, "ROADF_VOLUME");
-    flags = unrarhelpers_impl::parseArchiveFlag(flags, parsedFlags, ROADF_COMMENT, "ROADF_COMMENT");
-    flags = unrarhelpers_impl::parseArchiveFlag(flags, parsedFlags, ROADF_LOCK, "ROADF_LOCK");
-    flags = unrarhelpers_impl::parseArchiveFlag(flags, parsedFlags, ROADF_SOLID, "ROADF_SOLID");
-    flags = unrarhelpers_impl::parseArchiveFlag(flags, parsedFlags, ROADF_NEWNUMBERING, "ROADF_NEWNUMBERING");
-    flags = unrarhelpers_impl::parseArchiveFlag(flags, parsedFlags, ROADF_SIGNED, "ROADF_SIGNED");
-    flags = unrarhelpers_impl::parseArchiveFlag(flags, parsedFlags, ROADF_RECOVERY, "ROADF_RECOVERY");
-    flags = unrarhelpers_impl::parseArchiveFlag(flags, parsedFlags, ROADF_ENCHEADERS, "ROADF_ENCHEADERS");
-    flags = unrarhelpers_impl::parseArchiveFlag(flags, parsedFlags, ROADF_FIRSTVOLUME, "ROADF_FIRSTVOLUME");
+    flags = unrarhelpers_impl::parseArchiveFlag(flags, result, ROADF_VOLUME, "ROADF_VOLUME");
+    flags = unrarhelpers_impl::parseArchiveFlag(flags, result, ROADF_COMMENT, "ROADF_COMMENT");
+    flags = unrarhelpers_impl::parseArchiveFlag(flags, result, ROADF_LOCK, "ROADF_LOCK");
+    flags = unrarhelpers_impl::parseArchiveFlag(flags, result, ROADF_SOLID, "ROADF_SOLID");
+    flags = unrarhelpers_impl::parseArchiveFlag(flags, result, ROADF_NEWNUMBERING, "ROADF_NEWNUMBERING");
+    flags = unrarhelpers_impl::parseArchiveFlag(flags, result, ROADF_SIGNED, "ROADF_SIGNED");
+    flags = unrarhelpers_impl::parseArchiveFlag(flags, result, ROADF_RECOVERY, "ROADF_RECOVERY");
+    flags = unrarhelpers_impl::parseArchiveFlag(flags, result, ROADF_ENCHEADERS, "ROADF_ENCHEADERS");
+    flags = unrarhelpers_impl::parseArchiveFlag(flags, result, ROADF_FIRSTVOLUME, "ROADF_FIRSTVOLUME");
 
     if (flags)
     {
-        parsedFlags.insert(QString("Flag:0x") + QString::number(flags, 16));
+        if (!result.isEmpty())
+            result += " | ";
+        result += QString("Flag:0x") + QString::number(flags, 16);
     }
 
-    return parsedFlags;
+    return result;
 }

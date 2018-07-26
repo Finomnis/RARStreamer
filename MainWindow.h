@@ -21,7 +21,8 @@ class MainWindow : public QMainWindow
         void die(const QString &message);
         void updateStatus(const ExtractStatusMessage &msg);
         void log(const QString &message);
-        void finished();
+        void finished(bool success);
+        void cancelButton();
 
     private:
         Ui::MainWindow *ui;

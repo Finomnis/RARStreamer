@@ -18,7 +18,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&workerThread, SIGNAL(dieSignal(QString)), this, SLOT(die(QString)));
     connect(&workerThread, SIGNAL(updateGUI(ExtractStatusMessage)), this, SLOT(updateStatus(ExtractStatusMessage)));
     connect(&workerThread, SIGNAL(log(QString)), this, SLOT(log(QString)));
-    connect(&workerThread, SIGNAL(finished()), this, SLOT(finished()));
+    connect(&workerThread, SIGNAL(finished(bool)), this, SLOT(finished(bool)));
+    connect(ui->cancelButton, SIGNAL(released()), this, SLOT(cancelButton()));
 }
 
 MainWindow::~MainWindow()
@@ -74,7 +75,13 @@ void MainWindow::extract(const QString &archive)
     workerThread.extract(archive, extractDirectory);
 }
 
-void MainWindow::finished()
+void MainWindow::finished(bool success)
 {
     qApp->quit();
+}
+
+void MainWindow::cancelButton()
+{
+    ui->label_status->setText("Cancelling ...");
+    workerThread.cancel();
 }

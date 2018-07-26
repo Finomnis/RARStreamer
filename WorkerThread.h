@@ -23,13 +23,15 @@ class WorkerThread : public QThread
         explicit WorkerThread(QObject *parent);
         virtual ~WorkerThread();
         void extract(const QString &archive, const QString &outputFolder);
-        inline bool needsAbort() {return abort;}
-        inline float getFilePercent() {return progressTracker.getCurrentFilePercent();}
-        inline void addExtractedData(uint64_t dataSize) {progressTracker.addExtractedData(dataSize);}
+
+        bool needsAbort() const;
+        void cancel();
+        float getFilePercent() const;
+        inline void addExtractedData(uint64_t dataSize);
 
     signals:
         void dieSignal(const QString &message);
-        void finished();
+        void finished(bool success);
         void updateGUI(ExtractStatusMessage msg);
         void log(const QString &message);
 

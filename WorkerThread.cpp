@@ -19,6 +19,9 @@ extern "C" {
     int CALLBACK UnrarCallback(UINT msg, LPARAM UserData, LPARAM P1, LPARAM P2)
     {
         WorkerThread *parent = (WorkerThread *)UserData;
+        if (parent->needsAbort())
+            return -1;
+
         switch (msg)
         {
             case UCM_CHANGEVOLUMEW:
@@ -75,7 +78,7 @@ extern "C" {
                 emit parent->log(QString("Warning: Callback with unknown message ") + QString::number(msg) + QString(" caught."));
         }
 
-        return parent->needsAbort() ? -1 : 1;
+        return 1;
     }
 }
 
@@ -87,15 +90,8 @@ WorkerThread::WorkerThread(QObject *parent)
 
 WorkerThread::~WorkerThread()
 {
-    mutex.lock();
-    abort = true;
-    condition.wakeOne();
-    mutex.unlock();
 
-    wait();
 }
-
-
 
 void WorkerThread::extract(const QString &archive, const QString &outputFolder)
 {
@@ -117,10 +113,12 @@ void WorkerThread::run()
     if (RARGetDllVersion() < RAR_DLL_VERSION)
         die("UnRAR.dll is too old!", nullptr);
 
+    // Update GUI
     {
         ExtractStatusMessage msg;
         msg.status = "Opening ...";
         emit updateGUI(msg);
+        emit log(QString("Opening archive '") + archive + QString("' ..."));
     }
 
     // Initialize UnRAR config
@@ -135,7 +133,6 @@ void WorkerThread::run()
     unrarConfig.UserData = (LPARAM)this;
 
     // Open Archive
-    emit log(QString("Opening archive '") + archive + QString("' ..."));
     HANDLE rarHandle = RAROpenArchiveEx(&unrarConfig);
     if (rarHandle == nullptr || unrarConfig.OpenResult != ERAR_SUCCESS)
     {
@@ -150,24 +147,17 @@ void WorkerThread::run()
     }
 
     // Log archive flags
-    {
-        QString flags;
-        for (const QString &flag : parseArchiveFlags(unrarConfig.Flags))
-        {
-            if (!flags.isEmpty())
-                flags += " | ";
-            flags += flag;
-        }
-        emit log(QString("Archive Flags: ") + flags);
-    }
+    emit log(QString("Archive Flags: ") + parseArchiveFlags(unrarConfig.Flags));
 
-    // Extract
+    // Update GUI
     {
         ExtractStatusMessage msg;
         msg.status = "Extracting ...";
         msg.currentArchive = extractFilename((wchar_t *)archiveName.c_str());
         emit updateGUI(msg);
     }
+
+    // Extract
     while (true)
     {
         // Read File Header
@@ -175,51 +165,84 @@ void WorkerThread::run()
         {
             memset(&fileHeader, 0, sizeof(fileHeader));
             auto ret = RARReadHeaderEx(rarHandle, &fileHeader);
+            if (abort) break;
             if (ret != ERAR_SUCCESS)
             {
                 if (ret == ERAR_END_ARCHIVE)
-                {
                     break;
-                }
                 die(rarHeaderErrorToString(ret), rarHandle);
             }
         }
 
-        emit log(QString("Extracting: ") + QString::fromWCharArray(fileHeader.FileNameW));
-
+        // Compute Filesize, update progressTracker
         uint64_t fileSize = (uint64_t(fileHeader.UnpSizeHigh) << 32) | uint64_t(fileHeader.UnpSize);
         progressTracker.addNewFile(fileSize);
+
+        // Update GUI
         {
             ExtractStatusMessage msg;
             msg.currentFile = extractFilename(fileHeader.FileNameW);
             msg.currentFilePercent = 0.0f;
             emit updateGUI(msg);
+            emit log(QString("Extracting: ") + QString::fromWCharArray(fileHeader.FileNameW));
         }
 
         // Extract file
         std::wstring outputFolderString = outputFolder.toStdWString();
         auto ret = RARProcessFileW(rarHandle, RAR_EXTRACT, (wchar_t *)outputFolderString.c_str(), nullptr);
+        if (abort) break;
         if (ret != ERAR_SUCCESS)
             die(rarProcessFileErrorToString(ret), rarHandle);
     }
 
+    // Update GUI
     {
         ExtractStatusMessage msg;
         msg.status = "Closing archive ...";
         emit updateGUI(msg);
+        emit log(QString("Closing archive ..."));
     }
 
     // Close Archive
-    emit log(QString("Closing archive ..."));
     if (RARCloseArchive(rarHandle) != ERAR_SUCCESS)
         die("Archive close error", rarHandle);
 
+    // Update GUI
+    if (!abort)
     {
         ExtractStatusMessage msg;
         msg.status = "Finished.";
         emit updateGUI(msg);
+        emit log(QString("Finished."));
     }
-    emit log(QString("Finished."));
+    else
+    {
+        ExtractStatusMessage msg;
+        msg.status = "Canceled.";
+        emit updateGUI(msg);
+        emit log(QString("Canceled."));
+    }
 
-    emit finished();
+    // Close window
+    emit finished(!abort);
+}
+
+bool WorkerThread::needsAbort() const
+{
+    return abort;
+}
+
+void WorkerThread::cancel()
+{
+    abort = true;
+}
+
+float WorkerThread::getFilePercent() const
+{
+    return progressTracker.getCurrentFilePercent();
+}
+
+void WorkerThread::addExtractedData(uint64_t dataSize)
+{
+    progressTracker.addExtractedData(dataSize);
 }
