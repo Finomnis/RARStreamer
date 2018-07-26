@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setFixedSize(size());
+
     qRegisterMetaType<ExtractStatusMessage>();
 
     connect(&workerThread, SIGNAL(dieSignal(QString)), this, SLOT(die(QString)));
