@@ -5,9 +5,8 @@
 #endif
 #include <unrar.h>
 
-#include <set>
 #include <QString>
-#include <iostream>
+#include <set>
 
 template<typename T>
 QString rarOpenErrorToString(const T &error)

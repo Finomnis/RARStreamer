@@ -4,9 +4,6 @@
 
 #include <QFileInfo>
 
-#include <iostream>
-#include <sstream>
-
 #define die(msg, archive) { if(archive) RARCloseArchive(archive); emit dieSignal(msg); return; }
 
 namespace
@@ -108,8 +105,8 @@ void WorkerThread::extract(const QString &archive, const QString &outputFolder)
 
 void WorkerThread::run()
 {
-    std::cout << "UnRAR Static Version: " << RAR_DLL_VERSION << std::endl;
-    std::cout << "UnRAR Dynamic Version: " << RARGetDllVersion() << std::endl;
+    emit log(QString("UnRAR Static Version: ") + QString::number(RAR_DLL_VERSION));
+    emit log(QString("UnRAR Dynamic Version: ") + QString::number(RARGetDllVersion()));
 
     if (RARGetDllVersion() < RAR_DLL_VERSION)
         die("UnRAR.dll is too old!", nullptr);

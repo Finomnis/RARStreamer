@@ -35,12 +35,12 @@ void MainWindow::die(const QString &message)
 
 void MainWindow::updateStatus(const ExtractStatusMessage &message)
 {
-    std::cout << "     Status update: "
-              << message.status.toStdString() << " | "
-              << message.currentArchive.toStdString() << " | "
-              << message.currentFile.toStdString() << " | "
-              << message.currentFilePercent << " | "
-              << message.totalPercent << std::endl;
+    //std::cout << "     Status update: "
+    //          << message.status.toStdString() << " | "
+    //          << message.currentArchive.toStdString() << " | "
+    //          << message.currentFile.toStdString() << " | "
+    //          << message.currentFilePercent << " | "
+    //          << message.totalPercent << std::endl;
     if (!message.status.isEmpty())
         ui->label_status->setText(message.status);
     if (!message.currentArchive.isEmpty())
