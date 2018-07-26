@@ -26,5 +26,5 @@ int main(int argc, char *argv[])
 
     w.extract(args.at(0));
 
-    return app.exec();
+    exit(app.exec());
 }

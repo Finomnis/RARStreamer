@@ -2,10 +2,21 @@
 
 #include "UnRarHelpers.h"
 
+#include <QFileInfo>
+
 #include <iostream>
 #include <sstream>
 
 #define die(msg, archive) { if(archive) RARCloseArchive(archive); emit dieSignal(msg); return; }
+
+namespace
+{
+QString extractFilename(const wchar_t *name)
+{
+    QFileInfo file(QString::fromWCharArray(name));
+    return file.fileName();
+}
+}
 
 extern "C" {
     int CALLBACK UnrarCallback(UINT msg, LPARAM UserData, LPARAM P1, LPARAM P2)
@@ -15,26 +26,50 @@ extern "C" {
         {
             case UCM_CHANGEVOLUMEW:
                 if (P2 == RAR_VOL_NOTIFY)
-                    std::wcout << L"Processing '" << (wchar_t *)P1 << "'" << std::endl;
+                {
+                    parent->waitingArchive = QString();
+
+                    QString archive = extractFilename((wchar_t *)P1);
+
+                    ExtractStatusMessage msg;
+                    msg.status = "Extracting ...";
+                    msg.currentArchive = archive;
+                    emit parent->updateGUI(msg);
+
+                    emit parent->log(QString("Reading archive '") + archive + QString("' ..."));
+                }
                 else if (P2 == RAR_VOL_ASK)
                 {
-                    std::wcout << L"Asked for '" << (wchar_t *)P1 << "'" << std::endl;
+                    QString archive = extractFilename((wchar_t *)P1);
+                    if (parent->waitingArchive != archive)
+                    {
+                        parent->waitingArchive = archive;
+
+                        ExtractStatusMessage msg;
+                        msg.status = "Waiting for next part ...";
+                        msg.currentArchive = archive;
+                        emit parent->updateGUI(msg);
+
+                        emit parent->log(QString("Waiting for archive '") + archive + QString("' ..."));
+                    }
+
                     std::this_thread::sleep_for(std::chrono::milliseconds(100));
                 }
                 else
-                    std::wcout << L"UCM_CHANGEVOLUMEW" << std::endl;
+                    emit parent->log("Warning: Signal UCM_CHANGEVOLUMEW caught.");
                 break;
             case UCM_PROCESSDATA:
                 break;
             case UCM_NEEDPASSWORDW:
-                std::wcout << L"We need a password." << std::endl;
+                emit parent->dieSignal("Password archives not yet implemented. TODO.");
+                return -1;
                 break;
             case UCM_CHANGEVOLUME:
                 break;
             case UCM_NEEDPASSWORD:
                 break;
             default:
-                std::wcout << L"Callback: " << msg << std::endl;
+                emit parent->log(QString("Warning: Callback with unknown message ") + QString::number(msg) + QString(" caught."));
         }
 
         return 1;
@@ -79,6 +114,12 @@ void WorkerThread::run()
     if (RARGetDllVersion() < RAR_DLL_VERSION)
         die("UnRAR.dll is too old!", nullptr);
 
+    {
+        ExtractStatusMessage msg;
+        msg.status = "Opening ...";
+        emit updateGUI(msg);
+    }
+
     // Initialize UnRAR config
     RAROpenArchiveDataEx unrarConfig;
     memset(&unrarConfig, 0, sizeof(unrarConfig));
@@ -91,7 +132,7 @@ void WorkerThread::run()
     unrarConfig.UserData = (LPARAM)this;
 
     // Open Archive
-    log(QString("Opening archive '") + archive + QString("' ..."));
+    emit log(QString("Opening archive '") + archive + QString("' ..."));
     HANDLE rarHandle = RAROpenArchiveEx(&unrarConfig);
     if (rarHandle == nullptr || unrarConfig.OpenResult != ERAR_SUCCESS)
     {
@@ -114,9 +155,64 @@ void WorkerThread::run()
                 flags += " | ";
             flags += flag;
         }
-        log(QString("Archive Flags: ") + flags);
+        emit log(QString("Archive Flags: ") + flags);
     }
 
-    //emit updateGUI(ExtractStatusMessage());
-    die("Not implemented yet.", rarHandle);
+    // Extract
+    {
+        ExtractStatusMessage msg;
+        msg.status = "Extracting ...";
+        msg.currentArchive = extractFilename((wchar_t *)archiveName.c_str());
+        emit updateGUI(msg);
+    }
+    while (true)
+    {
+        // Read File Header
+        RARHeaderDataEx fileHeader;
+        {
+            memset(&fileHeader, 0, sizeof(fileHeader));
+            auto ret = RARReadHeaderEx(rarHandle, &fileHeader);
+            if (ret != ERAR_SUCCESS)
+            {
+                if (ret == ERAR_END_ARCHIVE)
+                {
+                    break;
+                }
+                die(rarHeaderErrorToString(ret), rarHandle);
+            }
+        }
+
+        {
+            ExtractStatusMessage msg;
+            msg.currentFile = extractFilename(fileHeader.FileNameW);
+            emit updateGUI(msg);
+        }
+        emit log(QString("Extracting: ") + QString::fromWCharArray(fileHeader.FileNameW));
+
+        // Extract file
+        std::wstring outputFolderString = outputFolder.toStdWString();
+        auto ret = RARProcessFileW(rarHandle, RAR_EXTRACT, (wchar_t *)outputFolderString.c_str(), nullptr);
+        if (ret != ERAR_SUCCESS)
+            die(rarProcessFileErrorToString(ret), rarHandle);
+    }
+
+    {
+        ExtractStatusMessage msg;
+        msg.status = "Closing archive ...";
+        emit updateGUI(msg);
+    }
+
+    // Close Archive
+    emit log(QString("Closing archive ..."));
+    if (RARCloseArchive(rarHandle) != ERAR_SUCCESS)
+        die("Archive close error", rarHandle);
+
+    {
+        ExtractStatusMessage msg;
+        msg.status = "Finished.";
+        emit updateGUI(msg);
+    }
+    emit log(QString("Finished."));
+
+    emit finished();
 }

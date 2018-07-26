@@ -14,7 +14,7 @@
    <string>RARStreamer</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QProgressBar" name="progressBar">
+   <widget class="QProgressBar" name="progressBar_currentFile">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="value">
-     <number>24</number>
+     <number>0</number>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -42,7 +42,7 @@
      <string>%p%</string>
     </property>
    </widget>
-   <widget class="QProgressBar" name="progressBar_2">
+   <widget class="QProgressBar" name="progressBar_total">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -52,7 +52,7 @@
      </rect>
     </property>
     <property name="value">
-     <number>24</number>
+     <number>0</number>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -102,7 +102,7 @@
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="label_status">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -121,7 +121,7 @@
      <enum>QFrame::Box</enum>
     </property>
     <property name="text">
-     <string>Extracting ...</string>
+     <string>Initializing ...</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -207,7 +207,7 @@
      <string>File:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_8">
+   <widget class="QLabel" name="label_targetDirectory">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -222,10 +222,10 @@
      </font>
     </property>
     <property name="text">
-     <string>C:/My/Directory</string>
+     <string>&lt;not set&gt;</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_9">
+   <widget class="QLabel" name="label_archive">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -240,10 +240,10 @@
      </font>
     </property>
     <property name="text">
-     <string>test.part01.rar</string>
+     <string>&lt;not set&gt;</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_10">
+   <widget class="QLabel" name="label_file">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -258,7 +258,7 @@
      </font>
     </property>
     <property name="text">
-     <string>aaa.mkv</string>
+     <string>&lt;not set&gt;</string>
     </property>
    </widget>
   </widget>

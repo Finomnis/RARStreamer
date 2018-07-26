@@ -6,6 +6,11 @@
 
 struct ExtractStatusMessage
 {
+    QString status = QString();
+    QString currentFile = QString();
+    QString currentArchive = QString();
+    float currentFilePercent = std::numeric_limits<float>::infinity();
+    float totalPercent = std::numeric_limits<float>::infinity();
 };
 Q_DECLARE_METATYPE(ExtractStatusMessage)
 
@@ -20,6 +25,7 @@ class WorkerThread : public QThread
 
     signals:
         void dieSignal(const QString &message);
+        void finished();
         void updateGUI(ExtractStatusMessage msg);
         void log(const QString &message);
 
@@ -32,4 +38,7 @@ class WorkerThread : public QThread
         volatile bool abort;
         QString archive;
         QString outputFolder;
+
+    public:
+        QString waitingArchive;
 };
