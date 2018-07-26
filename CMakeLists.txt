@@ -17,11 +17,13 @@ link_directories("ext")
 
 add_executable(RARStreamer
     main.cpp
-    MainWindow.cpp
     MainWindow.h
+    MainWindow.cpp
     MainWindow.ui
-    WorkerThread.cpp
     WorkerThread.h
+    WorkerThread.cpp
+    ProgressTracker.h
+    ProgressTracker.cpp
     UnRarHelpers.h
 )
 

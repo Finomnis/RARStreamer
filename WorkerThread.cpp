@@ -69,7 +69,7 @@ extern "C" {
                 emit parent->log(QString("Warning: Callback with unknown message ") + QString::number(msg) + QString(" caught."));
         }
 
-        return 1;
+        return parent->needsAbort() ? -1 : 1;
     }
 }
 

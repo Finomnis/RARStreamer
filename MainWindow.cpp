@@ -49,8 +49,8 @@ void MainWindow::updateStatus(const ExtractStatusMessage &message)
         ui->label_file->setText(message.currentFile);
     if (message.currentFilePercent != std::numeric_limits<float>::infinity())
         ui->progressBar_currentFile->setValue(int(std::round(message.currentFilePercent) + 0.5f));
-    if (message.totalPercent != std::numeric_limits<float>::infinity())
-        ui->progressBar_total->setValue(int(std::round(message.totalPercent) + 0.5f));
+    if (message.currentArchivePercent != std::numeric_limits<float>::infinity())
+        ui->progressBar_currentArchive->setValue(int(std::round(message.currentArchivePercent) + 0.5f));
 }
 
 
