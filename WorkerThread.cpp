@@ -56,6 +56,12 @@ extern "C" {
                     emit parent->log("Warning: Signal UCM_CHANGEVOLUMEW caught.");
                 break;
             case UCM_PROCESSDATA:
+                parent->addExtractedData(uint64_t(P2));
+                {
+                    ExtractStatusMessage msg;
+                    msg.currentFilePercent = parent->getFilePercent();
+                    emit parent->updateGUI(msg);
+                }
                 break;
             case UCM_NEEDPASSWORDW:
                 emit parent->dieSignal("Password archives not yet implemented. TODO.");
@@ -179,12 +185,16 @@ void WorkerThread::run()
             }
         }
 
+        emit log(QString("Extracting: ") + QString::fromWCharArray(fileHeader.FileNameW));
+
+        uint64_t fileSize = (uint64_t(fileHeader.UnpSizeHigh) << 32) | uint64_t(fileHeader.UnpSize);
+        progressTracker.addNewFile(fileSize);
         {
             ExtractStatusMessage msg;
             msg.currentFile = extractFilename(fileHeader.FileNameW);
+            msg.currentFilePercent = 0.0f;
             emit updateGUI(msg);
         }
-        emit log(QString("Extracting: ") + QString::fromWCharArray(fileHeader.FileNameW));
 
         // Extract file
         std::wstring outputFolderString = outputFolder.toStdWString();
