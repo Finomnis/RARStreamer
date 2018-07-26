@@ -15,6 +15,8 @@ find_package(Qt5Widgets REQUIRED)
 include_directories("ext")
 link_directories("ext")
 
+qt5_add_resources(QRCS resources.qrc)
+
 add_executable(RARStreamer
     main.cpp
     MainWindow.h
@@ -25,6 +27,7 @@ add_executable(RARStreamer
     ProgressTracker.h
     ProgressTracker.cpp
     UnRarHelpers.h
+    ${QRCS}
 )
 
 target_link_libraries(RARStreamer Qt5::Widgets UnRAR)

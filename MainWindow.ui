@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>RARStreamer</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/resources/icon.png</normaloff>:/resources/icon.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QProgressBar" name="progressBar_currentFile">
     <property name="geometry">
@@ -220,6 +224,8 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
