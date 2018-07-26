@@ -16,6 +16,10 @@ class MainWindow : public QMainWindow
         explicit MainWindow(QWidget *parent = nullptr);
         virtual ~MainWindow();
 
+    private slots:
+        void die(const QString &message);
+        void updateStatus(const ExtractStatusMessage &msg);
+
     private:
         Ui::MainWindow *ui;
         WorkerThread workerThread;
