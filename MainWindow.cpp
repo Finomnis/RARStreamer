@@ -31,6 +31,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::die(const QString &message)
 {
+    static bool dieMessageReceived = false;
+    if (dieMessageReceived)
+        return;
+
+    dieMessageReceived = true;
     QMessageBox messageBox(QMessageBox::Icon::Critical, "Error", "Critical Error:\n" + message, QMessageBox::Ok, this);
     messageBox.exec();
     qApp->quit();
@@ -59,7 +64,7 @@ void MainWindow::log(const QString &message)
     std::cout << "- " << message.toStdString() << std::endl;
 }
 
-void MainWindow::extract(const QString &archive, const QString &extractDirectory)
+void MainWindow::extract(const QString &archive, const QString &extractDirectory, const QString &password)
 {
     QFileInfo file(archive);
 
@@ -70,7 +75,7 @@ void MainWindow::extract(const QString &archive, const QString &extractDirectory
 
     ui->label_targetDirectory->setText(extractDirectory);
 
-    workerThread.extract(archive, extractDirectory);
+    workerThread.extract(archive, extractDirectory, password);
 }
 
 void MainWindow::finished(bool success)

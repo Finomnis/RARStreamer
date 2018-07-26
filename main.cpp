@@ -22,6 +22,9 @@ int main(int argc, char *argv[])
     QCommandLineOption outputDirectory(QStringList() << "o" << "output", "Sets the output directory", "dir");
     parser.addOption(outputDirectory);
 
+    QCommandLineOption passwordParameter(QStringList() << "p" << "password", "Sets an extraction password", "password");
+    parser.addOption(passwordParameter);
+
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
@@ -66,8 +69,15 @@ int main(int argc, char *argv[])
     if (extractDirectory.isEmpty())
         parser.showHelp();
 
+    // Compute password
+    QString password;
+    if (parser.isSet(passwordParameter))
+    {
+        password = parser.value(passwordParameter);
+    }
+
     // Start extraction
-    w.extract(inputFile, extractDirectory);
+    w.extract(inputFile, extractDirectory, password);
 
     exit(app.exec());
 }

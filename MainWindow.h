@@ -15,7 +15,7 @@ class MainWindow : public QMainWindow
     public:
         explicit MainWindow(QWidget *parent = nullptr);
         virtual ~MainWindow();
-        void extract(const QString &archive, const QString &extractDirectory);
+        void extract(const QString &archive, const QString &extractDirectory, const QString &password);
 
     private slots:
         void die(const QString &message);

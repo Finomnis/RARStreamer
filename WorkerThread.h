@@ -22,12 +22,13 @@ class WorkerThread : public QThread
     public:
         explicit WorkerThread(QObject *parent);
         virtual ~WorkerThread();
-        void extract(const QString &archive, const QString &outputFolder);
+        void extract(const QString &archive, const QString &outputFolder, const QString &password);
 
         bool needsAbort() const;
         void cancel();
         float getFilePercent() const;
-        inline void addExtractedData(uint64_t dataSize);
+        void addExtractedData(uint64_t dataSize);
+        QString getPassword();
 
     signals:
         void dieSignal(const QString &message);
@@ -44,6 +45,7 @@ class WorkerThread : public QThread
         volatile bool abort = false;
         QString archive;
         QString outputFolder;
+        QString password;
         ProgressTracker progressTracker;
 
     public:

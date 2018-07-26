@@ -67,9 +67,30 @@ extern "C" {
                 }
                 break;
             case UCM_NEEDPASSWORDW:
-                emit parent->dieSignal("Password archives not yet implemented. TODO.");
-                return -1;
-                break;
+            {
+                ExtractStatusMessage msg;
+                msg.status = "Requesting password ...";
+                emit parent->updateGUI(msg);
+                emit parent->log(QString("Requesting password ..."));
+            }
+            {
+                char *passwordBuffer = (char *)P1;
+                int passwordBufferSize = P2;
+                QString password = parent->getPassword();
+                if (password.isEmpty())
+                {
+                    parent->cancel();
+                    return -1;
+                }
+                memcpy(passwordBuffer, password.toUtf8().data(), std::max(0, std::min(password.toUtf8().size(), passwordBufferSize)));
+            }
+            {
+                ExtractStatusMessage msg;
+                msg.status = "Extracting ...";
+                emit parent->updateGUI(msg);
+                emit parent->log(QString("Got password. Extracting ..."));
+            }
+            break;
             case UCM_CHANGEVOLUME:
                 break;
             case UCM_NEEDPASSWORD:
@@ -93,13 +114,14 @@ WorkerThread::~WorkerThread()
 
 }
 
-void WorkerThread::extract(const QString &archive, const QString &outputFolder)
+void WorkerThread::extract(const QString &archive, const QString &outputFolder, const QString &password)
 {
     if (isRunning())
         return;
 
     this->archive = archive;
     this->outputFolder = outputFolder;
+    this->password = password;
 
     start(LowPriority);
 }
@@ -245,4 +267,13 @@ float WorkerThread::getFilePercent() const
 void WorkerThread::addExtractedData(uint64_t dataSize)
 {
     progressTracker.addExtractedData(dataSize);
+}
+
+QString WorkerThread::getPassword()
+{
+    if (password.isEmpty())
+    {
+        emit dieSignal("Password querying is not implemented yet!");
+    }
+    return password;
 }
