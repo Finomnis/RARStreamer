@@ -59,7 +59,7 @@ void MainWindow::log(const QString &message)
     std::cout << "- " << message.toStdString() << std::endl;
 }
 
-void MainWindow::extract(const QString &archive)
+void MainWindow::extract(const QString &archive, const QString &extractDirectory)
 {
     QFileInfo file(archive);
 
@@ -67,10 +67,6 @@ void MainWindow::extract(const QString &archive)
         die("Archive '" + archive + "' does not exist!");
     if (!file.isFile())
         die("'" + archive + "' is not a file!");
-
-    QDir directory = file.dir();
-    QString fileName = file.fileName();
-    QString extractDirectory = directory.filePath("rarstream_"  + fileName);
 
     ui->label_targetDirectory->setText(extractDirectory);
 

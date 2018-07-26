@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include <QApplication>
 #include <QCommandLineParser>
+#include <QFileDialog>
 
 int main(int argc, char *argv[])
 {
@@ -14,17 +15,59 @@ int main(int argc, char *argv[])
     parser.addVersionOption();
     parser.addPositionalArgument("archive", "The first archive.");
 
+    QCommandLineOption autoDirectory(QStringList() << "d" << "auto-directory", "Extracts to a rarstreamer_* subdirectory");
+    parser.addOption(autoDirectory);
+    QCommandLineOption sameDirectory(QStringList() << "s" << "same-directory", "Extracts to the directory of the archive");
+    parser.addOption(sameDirectory);
+    QCommandLineOption outputDirectory(QStringList() << "o" << "output", "Sets the output directory", "dir");
+    parser.addOption(outputDirectory);
+
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
 
-    if (args.empty())
-        parser.showHelp();
-
+    // Create window
     MainWindow w;
     w.show();
 
-    w.extract(args.at(0));
+    // Compute input file
+    QString inputFile;
+    if (args.size() > 0)
+        inputFile = args.at(0);
+    else
+        inputFile = QFileDialog::getOpenFileName(&w, "Open Archive");
+
+    if (inputFile.isEmpty())
+        parser.showHelp();
+
+    // Compute output directory
+    QString extractDirectory;
+    if (parser.isSet(outputDirectory))
+    {
+        extractDirectory = parser.value(outputDirectory);
+    }
+    else if (parser.isSet(autoDirectory))
+    {
+        QFileInfo file(inputFile);
+        QDir directory = file.dir();
+        QString fileName = file.fileName();
+        extractDirectory = directory.filePath("rarstream_"  + fileName);
+    }
+    else if (parser.isSet(sameDirectory))
+    {
+        QFileInfo file(inputFile);
+        extractDirectory = file.dir().path();
+    }
+    else
+    {
+        extractDirectory = QFileDialog::getExistingDirectory(&w, "Choose output directory");
+    }
+
+    if (extractDirectory.isEmpty())
+        parser.showHelp();
+
+    // Start extraction
+    w.extract(inputFile, extractDirectory);
 
     exit(app.exec());
 }
