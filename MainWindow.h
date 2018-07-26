@@ -15,10 +15,12 @@ class MainWindow : public QMainWindow
     public:
         explicit MainWindow(QWidget *parent = nullptr);
         virtual ~MainWindow();
+        void extract(const QString &archive);
 
     private slots:
         void die(const QString &message);
         void updateStatus(const ExtractStatusMessage &msg);
+        void log(const QString &message);
 
     private:
         Ui::MainWindow *ui;

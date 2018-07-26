@@ -14,13 +14,14 @@ class WorkerThread : public QThread
         Q_OBJECT
 
     public:
-        WorkerThread(QObject *parent);
-        ~WorkerThread() override;
+        explicit WorkerThread(QObject *parent);
+        virtual ~WorkerThread();
         void extract(const QString &archive, const QString &outputFolder);
 
     signals:
-        void dieParent(const QString &message);
+        void dieSignal(const QString &message);
         void updateGUI(ExtractStatusMessage msg);
+        void log(const QString &message);
 
     protected:
         void run() override;

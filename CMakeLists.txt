@@ -7,9 +7,13 @@ set(CMAKE_AUTOMOC ON)
 
 if(WIN32)
   set(CMAKE_WIN32_EXECUTABLE ON)
+  add_definitions(-DOS_WINDOWS)
 endif()
 
 find_package(Qt5Widgets REQUIRED)
+
+include_directories("ext")
+link_directories("ext")
 
 add_executable(RARStreamer
     main.cpp
@@ -17,6 +21,8 @@ add_executable(RARStreamer
     MainWindow.h
     MainWindow.ui
     WorkerThread.cpp
-    WorkerThread.h)
+    WorkerThread.h
+    UnRarHelpers.h
+)
 
-target_link_libraries(RARStreamer Qt5::Widgets)
+target_link_libraries(RARStreamer Qt5::Widgets UnRAR)
