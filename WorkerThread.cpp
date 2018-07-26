@@ -53,7 +53,7 @@ extern "C" {
                     std::this_thread::sleep_for(std::chrono::milliseconds(100));
                 }
                 else
-                    emit parent->log("Warning: Signal UCM_CHANGEVOLUMEW caught.");
+                    emit parent->log(QString("Warning: Signal UCM_CHANGEVOLUMEW caught with invalid parameter ") + QString::number(P2) + QString("."));
                 break;
             case UCM_PROCESSDATA:
                 parent->addExtractedData(uint64_t(P2));
