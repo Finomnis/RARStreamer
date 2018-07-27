@@ -11,10 +11,12 @@ if(WIN32)
   set(OS_SPECIFICS resources.rc)
 endif()
 
-find_package(Qt5Widgets REQUIRED)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake/")
 
-include_directories("ext")
-link_directories("ext")
+find_package(Qt5Widgets REQUIRED)
+find_package(UnRAR REQUIRED)
+
+include_directories("${UnRAR_INCLUDE_DIR}")
 
 qt5_add_resources(QRCS resources.qrc)
 
@@ -35,5 +37,9 @@ add_executable(RARStreamer
     ${OS_SPECIFICS}
 )
 
-target_link_libraries(RARStreamer Qt5::Widgets UnRAR)
+target_link_libraries(RARStreamer Qt5::Widgets "${UnRAR_LIBRARY}")
+add_custom_command(TARGET RARStreamer POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy "${UnRAR_RUNTIME_LIBRARY}" "$<TARGET_FILE_DIR:RARStreamer>"
+)
+
 install(TARGETS RARStreamer RUNTIME DESTINATION bin)
