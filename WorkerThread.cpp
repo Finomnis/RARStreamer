@@ -83,7 +83,8 @@ extern "C" {
                     parent->cancel();
                     return -1;
                 }
-                memcpy(passwordBuffer, password.toUtf8().data(), std::max(0, std::min(password.toUtf8().size(), passwordBufferSize)));
+                size_t size = std::min(password.toStdWString().size() * sizeof(wchar_t), size_t(passwordBufferSize));
+                memcpy(passwordBuffer, password.toStdWString().c_str(), size);
             }
             {
                 ExtractStatusMessage msg;
