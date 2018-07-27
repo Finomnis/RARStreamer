@@ -22,6 +22,9 @@ add_executable(RARStreamer
     MainWindow.h
     MainWindow.cpp
     MainWindow.ui
+    PasswordDialog.h
+    PasswordDialog.cpp
+    PasswordDialog.ui
     WorkerThread.h
     WorkerThread.cpp
     ProgressTracker.h

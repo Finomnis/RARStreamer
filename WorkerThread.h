@@ -29,12 +29,14 @@ class WorkerThread : public QThread
         float getFilePercent() const;
         void addExtractedData(uint64_t dataSize);
         QString getPassword();
+        void setPassword(const QString &password);
 
     signals:
         void dieSignal(const QString &message);
         void finished(bool success);
         void updateGUI(ExtractStatusMessage msg);
         void log(const QString &message);
+        void requestPassword();
 
     protected:
         void run() override;
@@ -45,8 +47,10 @@ class WorkerThread : public QThread
         volatile bool abort = false;
         QString archive;
         QString outputFolder;
-        QString password;
         ProgressTracker progressTracker;
+        QString password;
+        QMutex passwordMutex;
+        QWaitCondition passwordCondition;
 
     public:
         QString waitingArchive;

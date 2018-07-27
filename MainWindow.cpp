@@ -1,6 +1,8 @@
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
 
+#include "PasswordDialog.h"
+
 #include <QMessageBox>
 #include <QFileInfo>
 #include <QDir>
@@ -21,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&workerThread, SIGNAL(updateGUI(ExtractStatusMessage)), this, SLOT(updateStatus(ExtractStatusMessage)));
     connect(&workerThread, SIGNAL(log(QString)), this, SLOT(log(QString)));
     connect(&workerThread, SIGNAL(finished(bool)), this, SLOT(finished(bool)));
+    connect(&workerThread, SIGNAL(requestPassword()), this, SLOT(requestPassword()));
     connect(ui->cancelButton, SIGNAL(released()), this, SLOT(cancelButton()));
 }
 
@@ -87,4 +90,13 @@ void MainWindow::cancelButton()
 {
     ui->label_status->setText("Cancelling ...");
     workerThread.cancel();
+}
+
+void MainWindow::requestPassword()
+{
+    log("Requesting password from user ...");
+    PasswordDialog passwordDialog(this);
+    passwordDialog.exec();
+    QString password = passwordDialog.getPassword();
+    workerThread.setPassword(password);
 }

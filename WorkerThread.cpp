@@ -3,6 +3,7 @@
 #include "UnRarHelpers.h"
 
 #include <QFileInfo>
+#include <QMutexLocker>
 
 #define die(msg, archive) { if(archive) RARCloseArchive(archive); emit dieSignal(msg); return; }
 
@@ -271,9 +272,18 @@ void WorkerThread::addExtractedData(uint64_t dataSize)
 
 QString WorkerThread::getPassword()
 {
+    QMutexLocker lock(&passwordMutex);
     if (password.isEmpty())
     {
-        emit dieSignal("Password querying is not implemented yet!");
+        emit requestPassword();
+        passwordCondition.wait(&passwordMutex);
     }
     return password;
+}
+
+void WorkerThread::setPassword(const QString &password)
+{
+    QMutexLocker lock(&passwordMutex);
+    this->password = password;
+    passwordCondition.notify_all();
 }

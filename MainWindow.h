@@ -23,6 +23,7 @@ class MainWindow : public QMainWindow
         void log(const QString &message);
         void finished(bool success);
         void cancelButton();
+        void requestPassword();
 
     private:
         Ui::MainWindow *ui;
