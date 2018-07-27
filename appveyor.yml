@@ -12,7 +12,7 @@ before_build:
   - cmake -DCMAKE_INSTALL_PREFIX:STRING=..\install -DUNRAR_ROOT:STRING=C:\UnRAR -DCMAKE_PREFIX_PATH:STRING=C:\Qt\5.11.1\msvc2017_64 -DCMAKE_GENERATOR_PLATFORM:STRING=x64 ..
 
 build_script:
-  - cmake make
+  - cmake --build .
   
 after_build:
-  - cmake make install
+  - cmake --build . --target install
