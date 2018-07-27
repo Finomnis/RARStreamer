@@ -1,4 +1,4 @@
 image: Visual Studio 2017
 
-before-build:
+before_build:
   - dir
