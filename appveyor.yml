@@ -15,7 +15,11 @@ build_script:
 after_build:
   - cmake --build . --target install
   - cd ..\install\
-  - C:\Qt\5.11.1\msvc2017_64\bin\windeployqt.exe --debug RARStreamer\RARStreamer.exe
+  - C:\Qt\5.11.1\msvc2017_64\bin\windeployqt.exe --debug bin\RARStreamer.exe
+  - mkdir RARStreamer
+  - ps: Copy-Item bin\Qt5Core.dll, bin\Qt5Gui.dll, bin\Qt5Widgets.dll -Destination RARStreamer\
+  - ps: Copy-Item bin\UnRAR64.dll -Destination RARStreamer\
+  - ps: Copy-Item bin\platforms -Destination RARStreamer\platforms
   - 7z a RARStreamer.7z RARStreamer
   
 test: off
