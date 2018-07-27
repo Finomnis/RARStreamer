@@ -16,12 +16,10 @@ after_build:
   - cmake --build . --target install
   
 before_test:
-  - cd ..\install\bin
   - mkdir C:\UnRarTest
   - ps: Start-FileDownload https://www.rarlab.com/rar/rarlng.rar C:\UnRarTest\test.rar
-  - dir
-  - dir bin
+  - cd ..\install\bin
 
 test_script:
-  - cmd: bin\RARStreamer.exe --help
-  - cmd: bin\RARStreamer.exe -o C:/UnRarTest/output C:/UnRarTest/test.rar
+  - cmd: RARStreamer.exe --help
+  - cmd: RARStreamer.exe -o C:/UnRarTest/output C:/UnRarTest/test.rar
