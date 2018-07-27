@@ -1,10 +1,11 @@
 image: Visual Studio 2017
 
 install:
-  - ps: Start-FileDownload https://www.rarlab.com/rar/UnRARDLL.exe UnRARDLL.exe
-  - 7z x UnRARDLL.exe -oUnRAR
+  - ps: Start-FileDownload https://www.rarlab.com/rar/UnRARDLL.exe C:\UnRARDLL.exe
+  - 7z x C:\UnRARDLL.exe -oC:\UnRAR > NUL
 
 before_build:
+  - ps: Remove-Item -Recurse -Force some_dir build
   - md build
   - cd build
-  - cmake -DCMAKE_PREFIX_PATH:STRING=C:\Qt\5.11.1\msvc2017_64 -DCMAKE_GENERATOR_PLATFORM:STRING=x64 ..
+  - cmake -DUnRAR_PATH:STRING=C:\UnRAR -DCMAKE_PREFIX_PATH:STRING=C:\Qt\5.11.1\msvc2017_64 -DCMAKE_GENERATOR_PLATFORM:STRING=x64 ..
