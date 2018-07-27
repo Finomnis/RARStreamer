@@ -14,12 +14,11 @@ build_script:
   
 after_build:
   - cmake --build . --target install
+  - cd ..\install\
+  - 7z a RARStreamer.7z RARStreamer
   
-before_test:
-  - mkdir C:\UnRarTest
-  - ps: Start-FileDownload https://www.rarlab.com/rar/rarlng.rar C:\UnRarTest\test.rar
-  - cd ..\install\bin
+test: off
 
-test_script:
-  - cmd: RARStreamer.exe --help
-  - cmd: RARStreamer.exe -o C:/UnRarTest/output C:/UnRarTest/test.rar
+artifacts:
+  - path: 'install\RARStreamer.7z'  # relative to repo root
+    name: RARStreamer
