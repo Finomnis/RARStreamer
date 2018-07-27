@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
         inputFile = QFileDialog::getOpenFileName(&w, "Open Archive");
 
     if (inputFile.isEmpty())
-        parser.showHelp();
+        exit(1);
 
     // Compute output directory
     QString extractDirectory;
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     }
 
     if (extractDirectory.isEmpty())
-        parser.showHelp();
+        exit(1);
 
     // Compute password
     QString password;
