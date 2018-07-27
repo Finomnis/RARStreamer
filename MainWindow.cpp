@@ -64,7 +64,7 @@ void MainWindow::updateStatus(const ExtractStatusMessage &message)
 
 void MainWindow::log(const QString &message)
 {
-    std::cout << "- " << message.toStdString() << std::endl;
+    std::wcout << "- " << message.toStdWString() << std::endl;
 }
 
 void MainWindow::extract(const QString &archive, const QString &extractDirectory, const QString &password)
