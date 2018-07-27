@@ -21,5 +21,5 @@ before_test:
   - ps: Start-FileDownload https://www.rarlab.com/rar/rarlng.rar C:\UnRarTest\test.rar
 
 test_script:
-  - ./RARStreamer --help
-  - ./RARStreamer -o C:/UnRarTest/output C:/UnRarTest/test.rar
+  - RARStreamer.exe --help
+  - RARStreamer.exe -o C:/UnRarTest/output C:/UnRarTest/test.rar
