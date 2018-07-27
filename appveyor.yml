@@ -15,6 +15,7 @@ build_script:
 after_build:
   - cmake --build . --target install
   - cd ..\install\
+  - C:\Qt\5.11.1\msvc2017_64\bin\windeployqt.exe --release RARStreamer\RARStreamer.exe
   - 7z a RARStreamer.7z RARStreamer
   
 test: off
