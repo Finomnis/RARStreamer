@@ -1,5 +1,9 @@
 image: Visual Studio 2017
 
+install:
+  - ps: Start-FileDownload https://www.rarlab.com/rar/UnRARDLL.exe UnRARDLL.exe
+  - 7z x UnRARDLL.exe -o UnRAR
+
 before_build:
   - md build
   - cd build
