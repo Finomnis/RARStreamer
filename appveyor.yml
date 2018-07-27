@@ -1,4 +1,6 @@
 image: Visual Studio 2017
 
 before_build:
-  - dir
+  - md build
+  - cd build
+  - cmake ..
