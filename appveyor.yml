@@ -1,8 +1,8 @@
 image: Visual Studio 2017
 
 install:
-  - ps: Start-FileDownload https://www.rarlab.com/rar/UnRARDLL.exe C:\UnRARDLL.exe
-  - 7z x C:\UnRARDLL.exe -oC:\UnRAR > NUL
+  - ps: Start-FileDownload https://www.rarlab.com/rar/UnRARDLL.exe C:/UnRARDLL.exe
+  - 7z x C:/UnRARDLL.exe -oC:/UnRAR > NUL
 
 before_build:
   - mkdir build
@@ -14,3 +14,12 @@ build_script:
   
 after_build:
   - cmake --build . --target install
+  
+before_test:
+  - cd ../install
+  - mkdir C:/UnRarTest
+  - ps: Start-FileDownload https://www.rarlab.com/rar/rarlng.rar C:/UnRarTest/test.rar
+
+test_script:
+  - ./RARStreamer --help
+  - ./RARStreamer -o C:/UnRarTest/output C:/UnRarTest/test.rar
