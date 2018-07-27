@@ -5,8 +5,6 @@
 #include <QFileInfo>
 #include <QMutexLocker>
 
-#include <algorithm>
-
 #define die(msg, archive) { if(archive) RARCloseArchive(archive); emit dieSignal(msg); return; }
 
 namespace
@@ -85,7 +83,8 @@ extern "C" {
                     parent->cancel();
                     return -1;
                 }
-                size_t size = std::min(password.toStdWString().size() * sizeof(wchar_t), size_t(passwordBufferSize));
+                size_t size = password.toStdWString().size() * sizeof(wchar_t);
+                if (size > passwordBufferSize) size = passwordBufferSize;
                 memcpy(passwordBuffer, password.toStdWString().c_str(), size);
             }
             {
