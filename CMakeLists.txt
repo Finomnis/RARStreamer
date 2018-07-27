@@ -8,6 +8,7 @@ set(CMAKE_AUTOMOC ON)
 if(WIN32)
   set(CMAKE_WIN32_EXECUTABLE ON)
   add_definitions(-DOS_WINDOWS)
+  set(OS_SPECIFICS resources.rc)
 endif()
 
 find_package(Qt5Widgets REQUIRED)
@@ -31,6 +32,8 @@ add_executable(RARStreamer
     ProgressTracker.cpp
     UnRarHelpers.h
     ${QRCS}
+    ${OS_SPECIFICS}
 )
 
 target_link_libraries(RARStreamer Qt5::Widgets UnRAR)
+install(TARGETS RARStreamer RUNTIME DESTINATION bin)
