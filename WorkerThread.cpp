@@ -5,6 +5,8 @@
 #include <QFileInfo>
 #include <QMutexLocker>
 
+#include <algorithm>
+
 #define die(msg, archive) { if(archive) RARCloseArchive(archive); emit dieSignal(msg); return; }
 
 namespace
