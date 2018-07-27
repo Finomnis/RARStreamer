@@ -32,7 +32,7 @@ find_library(UnRAR_LIBRARY
 )
 message("UnRAR Library: ${UnRAR_LIBRARY}")
 
-find_library(UnRAR_RUNTIME_LIBRARY 
+find_file(UnRAR_RUNTIME_LIBRARY 
     NAMES ${UnRAR_LIBRARY_NAME}.dll
     PATHS ${UnRAR_ROOT_DIR}
     PATH_SUFFIXES "x64"
