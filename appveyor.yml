@@ -7,7 +7,7 @@ install:
 before_build:
   - mkdir build
   - cd build
-  - cmake -DCMAKE_INSTALL_PREFIX:STRING=../install -DUNRAR_ROOT:STRING=C:/UnRAR -DCMAKE_PREFIX_PATH:STRING=C:/Qt/5.11.1/msvc2017_64 -DCMAKE_GENERATOR_PLATFORM:STRING=x64 ..
+  - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../install -DUNRAR_ROOT=C:/UnRAR -DCMAKE_PREFIX_PATH=C:/Qt/5.11.1/msvc2017_64 -DCMAKE_GENERATOR_PLATFORM=x64 ..
 
 build_script:
   - cmake --build .
@@ -15,7 +15,7 @@ build_script:
 after_build:
   - cmake --build . --target install
   - cd ..\install\
-  - C:\Qt\5.11.1\msvc2017_64\bin\windeployqt.exe --debug bin\RARStreamer.exe
+  - C:\Qt\5.11.1\msvc2017_64\bin\windeployqt.exe --release bin\RARStreamer.exe
   - mkdir RARStreamer
   - ps: Copy-Item bin\Qt5Core.dll, bin\Qt5Gui.dll, bin\Qt5Widgets.dll -Destination RARStreamer\
   - ps: Copy-Item bin\UnRAR64.dll -Destination RARStreamer\
