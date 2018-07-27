@@ -23,5 +23,5 @@ before_test:
   - dir bin
 
 test_script:
-  - bin\RARStreamer.exe --help
-  - bin\RARStreamer.exe -o C:/UnRarTest/output C:/UnRarTest/test.rar
+  - cmd: bin\RARStreamer.exe --help
+  - cmd: bin\RARStreamer.exe -o C:/UnRarTest/output C:/UnRarTest/test.rar
