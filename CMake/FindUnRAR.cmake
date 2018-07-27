@@ -15,6 +15,7 @@ find_path(UnRAR_INCLUDE_DIR
     PATHS ${UnRAR_ROOT_DIR}
     DOC "The UnRAR include directory"
 )
+message("UnRAR Include Directory: ${UnRAR_INCLUDE_DIR}")
 
 set(UnRAR_LIBRARY_NAME UnRAR)
 
@@ -29,6 +30,7 @@ find_library(UnRAR_LIBRARY
     PATH_SUFFIXES "x64"
     DOC "The UnRAR library"
 )
+message("UnRAR Library: ${UnRAR_LIBRARY}")
 
 find_library(UnRAR_RUNTIME_LIBRARY 
     NAMES ${UnRAR_LIBRARY_NAME}.dll
@@ -36,6 +38,7 @@ find_library(UnRAR_RUNTIME_LIBRARY
     PATH_SUFFIXES "x64"
     DOC "The UnRAR runtime library"
 )
+message("UnRAR Runtime Library: ${UnRAR_RUNTIME_LIBRARY}")
 
 include(FindPackageHandleStandardArgs)
 # handle the QUIETLY and REQUIRED arguments and set LOGGING_FOUND to TRUE
@@ -48,8 +51,6 @@ if (UnRAR_FOUND)
     set(UnRAR_INCLUDE_DIRS ${UnRAR_INCLUDE_DIR} )
 endif()
 
-message("UnRAR Library: ${UnRAR_LIBRARY}")
-message("UnRAR Runtime Library: ${UnRAR_RUNTIME_LIBRARY}")
 
 # Tell cmake GUIs to ignore the "local" variables.
 mark_as_advanced(UnRAR_ROOT_DIR UnRAR_INCLUDE_DIR UnRAR_LIBRARY UnRAR_RUNTIME_LIBRARY)
