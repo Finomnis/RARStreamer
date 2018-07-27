@@ -3,4 +3,4 @@ image: Visual Studio 2017
 before_build:
   - md build
   - cd build
-  - cmake ..
+  - cmake -DCMAKE_GENERATOR_PLATFORM x64 ..
