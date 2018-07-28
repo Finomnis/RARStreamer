@@ -9,6 +9,31 @@
 #include <set>
 
 template<typename T>
+QString rarErrorToEnumString(const T &error)
+{
+    switch (error)
+    {
+        case ERAR_SUCCESS          : return "ERAR_SUCCESS";
+        case ERAR_END_ARCHIVE      : return "ERAR_END_ARCHIVE";
+        case ERAR_NO_MEMORY        : return "ERAR_NO_MEMORY";
+        case ERAR_BAD_DATA         : return "ERAR_BAD_DATA";
+        case ERAR_BAD_ARCHIVE      : return "ERAR_BAD_ARCHIVE";
+        case ERAR_UNKNOWN_FORMAT   : return "ERAR_UNKNOWN_FORMAT";
+        case ERAR_EOPEN            : return "ERAR_EOPEN";
+        case ERAR_ECREATE          : return "ERAR_ECREATE";
+        case ERAR_ECLOSE           : return "ERAR_ECLOSE";
+        case ERAR_EREAD            : return "ERAR_EREAD";
+        case ERAR_EWRITE           : return "ERAR_EWRITE";
+        case ERAR_SMALL_BUF        : return "ERAR_SMALL_BUF";
+        case ERAR_UNKNOWN          : return "ERAR_UNKNOWN";
+        case ERAR_MISSING_PASSWORD : return "ERAR_MISSING_PASSWORD";
+        case ERAR_EREFERENCE       : return "ERAR_EREFERENCE";
+        case ERAR_BAD_PASSWORD     : return "ERAR_BAD_PASSWORD";
+        default                    : return "ERAR_UNKNOWN_ERROR_" + QString::number(error);
+    }
+}
+
+template<typename T>
 QString rarOpenErrorToString(const T &error)
 {
     switch (error)
@@ -16,10 +41,11 @@ QString rarOpenErrorToString(const T &error)
         case ERAR_SUCCESS         : return "Success.";
         case ERAR_NO_MEMORY       : return "Not enough memory to initialize data structures.";
         case ERAR_BAD_DATA        : return "Archive header broken!";
+        case ERAR_BAD_ARCHIVE     : return "Unknown archive format!";
         case ERAR_UNKNOWN_FORMAT  : return "Unknown encryption used for archive headers!";
         case ERAR_EOPEN           : return "Cannot open archive!";
         case ERAR_BAD_PASSWORD    : return "Entered password is invalid!";
-        default                   : return "Unknown Error: " + QString::number(error);
+        default                   : return rarErrorToEnumString(error);
     }
 }
 
@@ -36,9 +62,8 @@ QString rarProcessFileErrorToString(const T &error)
         case ERAR_ECLOSE             : return "File close error";
         case ERAR_EREAD              : return "Read error";
         case ERAR_EWRITE             : return "Write error";
-        case ERAR_EREFERENCE         : return "ERAR_EREFERENCE";
         case ERAR_BAD_PASSWORD       : return "Entered password is invalid";
-        default                      : return "Unknown Error: " + QString::number(error);
+        default                      : return rarErrorToEnumString(error);
     }
 }
 
@@ -50,7 +75,7 @@ QString rarHeaderErrorToString(const T &error)
         case ERAR_END_ARCHIVE        : return "End of archive";
         case ERAR_BAD_DATA           : return "File header broken";
         case ERAR_MISSING_PASSWORD   : return "Password was not provided for encrypted file header";
-        default                      : return "Unknown Error: " + QString::number(error);
+        default                      : return rarErrorToEnumString(error);
     }
 }
 

@@ -39,10 +39,5 @@ add_executable(RARStreamer
 
 target_link_libraries(RARStreamer Qt5::Widgets "${UnRAR_LIBRARY}")
 
-# Copy UnRAR runtime library to binary path, necessary to make RARStreamer executable from within QtCreator
-add_custom_command(TARGET RARStreamer POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy "${UnRAR_RUNTIME_LIBRARY}" "$<TARGET_FILE_DIR:RARStreamer>"
-)
-
 install(TARGETS RARStreamer DESTINATION bin)
 install(FILES ${UnRAR_RUNTIME_LIBRARY} DESTINATION bin)
