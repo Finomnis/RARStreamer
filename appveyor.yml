@@ -7,7 +7,7 @@ install:
 before_build:
   - mkdir build
   - cd build
-  - cmake --trace -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX=../install -DUNRAR_ROOT=C:/UnRAR -DCMAKE_PREFIX_PATH=C:/Qt/5.11.1/msvc2017_64 -DCMAKE_GENERATOR_PLATFORM=x64 ..
+  - cmake --trace -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../install -DUNRAR_ROOT=C:/UnRAR -DCMAKE_PREFIX_PATH=C:/Qt/5.11.1/msvc2017_64 -DCMAKE_GENERATOR_PLATFORM=x64 ..
 
 build_script:
   - cmake --build .
