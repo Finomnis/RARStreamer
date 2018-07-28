@@ -20,7 +20,7 @@ after_build:
   - ps: Copy-Item bin\Qt5Gui.dll      -Destination RARStreamer\
   - ps: Copy-Item bin\Qt5Core.dll     -Destination RARStreamer\
   - ps: Copy-Item bin\Qt5Widgets.dll  -Destination RARStreamer\
-  - ps: Copy-Item bin\platforms       -Destination RARStreamer\
+  - ps: Copy-Item bin\platforms       -Destination RARStreamer\ -Recurse
   - ps: Copy-Item bin\UnRAR64.dll     -Destination RARStreamer\
   - ps: Copy-Item bin\RARStreamer.exe -Destination RARStreamer\
   - 7z a RARStreamer.7z RARStreamer
