@@ -17,12 +17,15 @@ after_build:
   - cd ..\install\
   - C:\Qt\5.11.1\msvc2017_64\bin\windeployqt.exe --release bin\RARStreamer.exe
   - mkdir RARStreamer
-  - ps: Copy-Item bin\Qt5Gui.dll      -Destination RARStreamer\
-  - ps: Copy-Item bin\Qt5Core.dll     -Destination RARStreamer\
-  - ps: Copy-Item bin\Qt5Widgets.dll  -Destination RARStreamer\
-  - ps: Copy-Item bin\platforms       -Destination RARStreamer\ -Recurse
-  - ps: Copy-Item bin\UnRAR64.dll     -Destination RARStreamer\
-  - ps: Copy-Item bin\RARStreamer.exe -Destination RARStreamer\
+  - ps: Copy-Item bin\Qt5Gui.dll        -Destination RARStreamer\
+  - ps: Copy-Item bin\Qt5Core.dll       -Destination RARStreamer\
+  - ps: Copy-Item bin\Qt5Widgets.dll    -Destination RARStreamer\
+  - ps: Copy-Item bin\platforms         -Destination RARStreamer\ -Recurse
+  - ps: Copy-Item bin\UnRAR64.dll       -Destination RARStreamer\
+  - ps: Copy-Item bin\RARStreamer.exe   -Destination RARStreamer\
+  - ps: Copy-Item bin\USED_LICENSES.txt -Destination RARStreamer\
+  - ps: Copy-Item C:\UnRAR\license.txt  -Destination RARStreamer\USED_LICENSE_UNRAR.txt
+  
   - 7z a RARStreamer.7z RARStreamer
   
 test: off

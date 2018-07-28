@@ -1,0 +1,17 @@
+This is the list of all licenses that were used in this project.
+
+- Application icon (ico and png version):
+    Name: Extract, winrar icon
+    Author: FatCow Web Hosting (http://www.fatcow.com/)
+    Source: https://www.iconfinder.com/icons/64995/extract_winrar_icon
+    License: https://creativecommons.org/licenses/by/3.0/us/
+    
+- Qt5Widgets
+    Authors: Haavard Nord and Eirik Chambe-Eng
+    Source: https://www.qt.io/
+    License: LGPL v3 (http://doc.qt.io/qt-5/lgpl.html)
+    
+- unrar.dll
+    Author: Alexander Roshal
+    Source: https://www.rarlab.com/ (https://www.rarlab.com/rar/UnRARDLL.exe)
+    License: See provided USED_LICENSE_UNRAR.txt
