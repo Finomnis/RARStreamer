@@ -21,18 +21,18 @@ include_directories("${UnRAR_INCLUDE_DIR}")
 qt5_add_resources(QRCS resources.qrc)
 
 add_executable(RARStreamer
-    main.cpp
-    MainWindow.h
-    MainWindow.cpp
-    MainWindow.ui
-    PasswordDialog.h
-    PasswordDialog.cpp
-    PasswordDialog.ui
-    WorkerThread.h
-    WorkerThread.cpp
-    ProgressTracker.h
-    ProgressTracker.cpp
-    UnRarHelpers.h
+    src/main.cpp
+    src/MainWindow.h
+    src/MainWindow.cpp
+    src/MainWindow.ui
+    src/PasswordDialog.h
+    src/PasswordDialog.cpp
+    src/PasswordDialog.ui
+    src/WorkerThread.h
+    src/WorkerThread.cpp
+    src/ProgressTracker.h
+    src/ProgressTracker.cpp
+    src/UnRarHelpers.h
     ${QRCS}
     ${OS_SPECIFICS}
 )
