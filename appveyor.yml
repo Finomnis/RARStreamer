@@ -1,8 +1,8 @@
 image: Visual Studio 2015
 
 init:
-  - gcc --version
-  - g++ --version
+  - C:\MinGW\bin\gcc --version
+  - C:\MinGW\bin\g++ --version
 
 install:
   - ps: Start-FileDownload https://www.rarlab.com/rar/UnRARDLL.exe C:\UnRARDLL.exe
