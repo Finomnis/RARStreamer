@@ -55,13 +55,13 @@ QString rarProcessFileErrorToString(const T &error)
     switch (error)
     {
         case ERAR_NO_MEMORY          : return "Not enough memory";
-        case ERAR_BAD_DATA           : return "File CRC error";
+        case ERAR_BAD_DATA           : return "File CRC error.\nIf a password was used, it might be wrong.";
         case ERAR_UNKNOWN_FORMAT     : return "Unknown archive format";
         case ERAR_EOPEN              : return "Volume open error";
-        case ERAR_ECREATE            : return "File create error";
+        case ERAR_ECREATE            : return "File create error.\nVolume might be full, or target filename might be too long.";
         case ERAR_ECLOSE             : return "File close error";
         case ERAR_EREAD              : return "Read error";
-        case ERAR_EWRITE             : return "Write error";
+        case ERAR_EWRITE             : return "Write error.\nVolume might be full.";
         case ERAR_BAD_PASSWORD       : return "Entered password is invalid";
         default                      : return rarErrorToEnumString(error);
     }
@@ -73,7 +73,7 @@ QString rarHeaderErrorToString(const T &error)
     switch (error)
     {
         case ERAR_END_ARCHIVE        : return "End of archive";
-        case ERAR_BAD_DATA           : return "File header broken";
+        case ERAR_BAD_DATA           : return "File header broken.\nIf a password was used, it might be wrong.";
         case ERAR_MISSING_PASSWORD   : return "Password was not provided for encrypted file header";
         default                      : return rarErrorToEnumString(error);
     }
