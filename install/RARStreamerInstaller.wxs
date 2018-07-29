@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+
+  <!-- Name, Version, Language, etc. -->
+  <Product Name='RARStreamer' Manufacturer='Finomnis'
+    Id='2971A636-A58C-4EF1-96ED-B24DECA7C422' 
+    UpgradeCode='2A75E76D-BF7B-4123-8F64-2CC6DC716F38'
+    Language='1033' Codepage='1252' Version='1.0.0'>
+    <Package Id='*' Keywords='Installer' Description="RARStreamer Installer" Manufacturer='Finomnis'
+      InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+    
+    <!-- Obsolete nowadays, but still needs to be in here. Describes how data is stored on disks. -->
+    <Media Id='1' Cabinet='data.cab' EmbedCab='yes' DiskPrompt='DATA #1' />
+    <Property Id='DiskPrompt' Value="RARStreamer Installation [1]" />
+    
+    <!-- The actual files -->
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      
+      <!-- Program Files -->
+      <Directory Id='ProgramFilesFolder' Name='PFiles'>
+        <Directory Id='Acme' Name='Acme'>
+          <Directory Id='INSTALLDIR' Name='RARStreamer'>
+            <Component Id='MainExecutable' Guid='81FC435D-B7B8-446A-880B-9D0043A54977'>
+              <File Id='RARStreamerEXE' Name='RARStreamer.exe' DiskId='1' Source='RARStreamer/RARStreamer.exe' KeyPath='yes'>
+                <Shortcut Id="startmenuRARStreamer" Directory="ProgramMenuDir" Name="RARStreamer"
+                  WorkingDirectory='INSTALLDIR' Icon="RARStreamerIcon.exe" IconIndex="0" Advertise="yes" />
+                <Shortcut Id="desktopRARStreamer" Directory="DesktopFolder" Name="RARStreamer"
+                  WorkingDirectory='INSTALLDIR' Icon="RARStreamerIcon.exe" IconIndex="0" Advertise="yes" />
+              </File>
+            </Component>
+            <Component Id='Qt5CoreLibrary' Guid='7E3DF199-7463-411C-A600-28C0941EE12C'>
+              <File Id='Qt5CoreDLL' Name='Qt5Core.dll' DiskId='1' Source='RARStreamer/Qt5Core.dll' KeyPath='yes' />
+            </Component>
+            <Component Id='Qt5GuiLibrary' Guid='69F75682-6631-4154-80D1-5D68E9C3EF17'>
+              <File Id='Qt5GuiDLL' Name='Qt5Gui.dll' DiskId='1' Source='RARStreamer/Qt5Gui.dll' KeyPath='yes' />
+            </Component>
+            <Component Id='Qt5WidgetsLibrary' Guid='9827430E-5E20-42D8-9D87-31C21DEE09A1'>
+              <File Id='Qt5WidgetsDLL' Name='Qt5Widgets.dll' DiskId='1' Source='RARStreamer/Qt5Widgets.dll' KeyPath='yes' />
+            </Component>
+            <Component Id='UnRAR64Library' Guid='ABBBB762-36E1-481D-BBC7-8D105854AAD3'>
+              <File Id='UnRAR64DLL' Name='UnRAR64.dll' DiskId='1' Source='RARStreamer/UnRAR64.dll' KeyPath='yes' />
+            </Component>
+            <Component Id='License' Guid='8B5DD691-1A82-4BFD-9E54-CC56B19FA375'>
+              <File Id='LicenseTXT' Name='LICENSE.txt' DiskId='1' Source='RARStreamer/LICENSE.txt' KeyPath='yes' />
+            </Component>
+            <Component Id='UsedLicenses' Guid='B8537609-AE0E-461E-938F-D10737FD7891'>
+              <File Id='UsedLicensesTXT' Name='USED_LICENSES.txt' DiskId='1' Source='RARStreamer/USED_LICENSES.txt' KeyPath='yes' />
+            </Component>
+            <Component Id='UsedLicenseUnrar' Guid='CBC6EFBB-6F3B-4E32-940E-995A66761E47'>
+              <File Id='UsedLicenseUnrarTXT' Name='USED_LICENSE_UNRAR.txt' DiskId='1' Source='RARStreamer/USED_LICENSE_UNRAR.txt' KeyPath='yes' />
+            </Component>
+            <Directory Id='QtPlatforms' Name='platforms'>
+              <Component Id='QtPlatformWindows' Guid='B28D995E-18E8-4379-A96C-B9D5280CE07E'>
+                <File Id='QtPlatformWindowsDLL' Name='qwindows.dll' DiskId='1' Source='RARStreamer/platforms/qwindows.dll' KeyPath='yes' />
+              </Component>
+            </Directory>
+            <Directory Id='QtStyles' Name='styles'>
+              <Component Id='QtStyleWindowsVista' Guid='D8B55060-05C2-453E-A544-9949FFB7927F'>
+                <File Id='QtStyleWindowsVistaDLL' Name='qwindowsvistastyle.dll' DiskId='1' Source='RARStreamer/styles/qwindowsvistastyle.dll' KeyPath='yes' />
+              </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+      
+      <!-- Start Menu and Uninstall -->
+      <Directory Id="ProgramMenuFolder" Name="Programs">
+        <Directory Id="ProgramMenuDir" Name="RARStreamer">
+          <Component Id="ProgramMenuDir" Guid="130B0B79-ECBB-4963-A9DF-EC46E732EFAE">
+              <RemoveFolder Id='ProgramMenuDir' On='uninstall' />
+              <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string' Value='' KeyPath='yes' />
+          </Component>
+        </Directory>
+      </Directory>
+
+      <Directory Id="DesktopFolder" Name="Desktop" />
+    </Directory>
+    
+    <Icon Id="RARStreamerIcon.exe" SourceFile="RARStreamer.exe" />
+    
+    <Feature Id='Complete' Level='1'>
+      <ComponentRef Id='MainExecutable' />
+      <ComponentRef Id='Qt5CoreLibrary' />
+      <ComponentRef Id='Qt5GuiLibrary' />
+      <ComponentRef Id='Qt5WidgetsLibrary' />
+      <ComponentRef Id='UnRAR64Library' />
+      <ComponentRef Id='License' />
+      <ComponentRef Id='UsedLicenses' />
+      <ComponentRef Id='UsedLicenseUnrar' />
+      <ComponentRef Id='QtPlatformWindows' />
+      <ComponentRef Id='QtStyleWindowsVista' />
+      <ComponentRef Id='ProgramMenuDir' />
+    </Feature>
+    
+  </Product>
+</Wix>

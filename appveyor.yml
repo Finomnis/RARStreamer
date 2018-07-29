@@ -30,11 +30,14 @@ after_build:
   - ps: Copy-Item bin\USED_LICENSES.txt -Destination RARStreamer\
   - ps: Copy-Item bin\LICENSE           -Destination RARStreamer\LICENSE.txt
   - ps: Copy-Item C:\UnRAR\license.txt  -Destination RARStreamer\USED_LICENSE_UNRAR.txt
-  
   - 7z a RARStreamer.7z RARStreamer
+  - candle RARStreamerInstaller.wxs
+  - light RARStreamerInstaller.wixobj
   
 test: off
 
 artifacts:
   - path: 'install\RARStreamer.7z'  # relative to repo root
     name: RARStreamer
+  - path: 'install\RARStreamerInstaller.msi'  # relative to repo root
+    name: RARStreamerInstaller
