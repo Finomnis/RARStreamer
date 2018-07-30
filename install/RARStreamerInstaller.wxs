@@ -95,6 +95,14 @@
     <Icon Id="RARStreamerIcon.exe" SourceFile="RARStreamer\RARStreamer.exe" />
     <Property Id="ARPPRODUCTICON" Value="RARStreamerIcon.exe" />
     
+    <!-- MSVC Redistributable -->
+    <DirectoryRef Id="TARGETDIR">
+      <Merge Id="VCRedist" 
+        SourceFile="$(var.VCMergeModule)" 
+        DiskId="1" 
+        Language="0"/>
+    </DirectoryRef>
+    
     <!-- Product Tree configuratoin -->
     <Feature Id='Complete' Title='RAR Streamer' Description='The complete package.' Display='expand' Level='1' ConfigurableDirectory='APPLICATIONFOLDER' AllowAdvertise='no' Absent='disallow'>      
       <ComponentRef Id='License' />
@@ -110,12 +118,13 @@
         <ComponentRef Id='QtStyleWindowsVista' />
         <ComponentRef Id='ProgramMenuDir' />
       </Feature>
-      <Feature Id="VCRedist" 
-          Title="Visual C++ 14.1 x64 Runtime" 
-          AllowAdvertise="no"
-          Level="1">
-        <MergeRef Id="VCRedist"/>
-      </Feature>
+    </Feature>
+        
+    <Feature Id="VCRedist" 
+        Title="Visual C++ 14.1 x64 Runtime" 
+        AllowAdvertise="no"
+        Level="1">
+      <MergeRef Id="VCRedist"/>
     </Feature>
     
     <!-- Updater -->
@@ -147,14 +156,6 @@
     <WixVariable Id="WixUISupportPerUser" Value="0" /-->
      
     <WixVariable Id="WixUILicenseRtf" Value="RARStreamer\LICENSE.rtf" />
-
-    <!-- MSVC Redistributable -->
-    <DirectoryRef Id="TARGETDIR">
-      <Merge Id="VCRedist" 
-        SourceFile="$(var.VCMergeModule)" 
-        DiskId="1" 
-        Language="0"/>
-    </DirectoryRef>
     
   </Product>
 </Wix>
