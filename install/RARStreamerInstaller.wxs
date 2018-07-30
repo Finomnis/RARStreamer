@@ -6,10 +6,11 @@
   
   
   <!-- Name, Version, Language, etc. -->
+  <!--Id='2971A636-A58C-4EF1-96ED-B24DECA7C422'-->
   <Product
     Name='RAR Streamer'
     Manufacturer='Finomnis'
-    Id='2971A636-A58C-4EF1-96ED-B24DECA7C422' 
+    Id='*'
     UpgradeCode='2A75E76D-BF7B-4123-8F64-2CC6DC716F38'
     Language='1033'
     Codepage='1252'
@@ -118,6 +119,9 @@
         Maximum="$(var.ProductVersion)" IncludeMaximum='yes' />
       <UpgradeVersion OnlyDetect='yes' Property='NEWERFOUND'
         Minimum="$(var.ProductVersion)" IncludeMinimum='no' />
+      <UpgradeVersion OnlyDetect='no' Property='PREVIOUSFOUND'
+        Minimum='1.0.0' IncludeMinimum='yes'
+        Maximum="$(var.ProductVersion)" IncludeMaximum='no' />
     </Upgrade>
     <CustomAction Id='AlreadyUpdated' Error="RAR Streamer has already been updated to $(var.ProductVersion) or newer." />
     <CustomAction Id='NoDowngrade' Error="A later version of RAR Streamer is already installed." />
