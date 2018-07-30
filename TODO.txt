@@ -1,4 +1,2 @@
-- continue tutorial -> uninstaller? probably not, double check with version number
-
 - context menu for rar
 - vc redistributable

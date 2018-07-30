@@ -3,7 +3,7 @@
 
   <!-- Variables -->
   <?define ProductVersion = "$(env.APPVEYOR_BUILD_VERSION)" ?>
-  
+  <?define VCMergeModule = "$(env.VCToolsRedistDir)MergeModules\Microsoft_VC141_CRT_x64.msm" ?>
   
   <!-- Name, Version, Language, etc. -->
   <!--Id='2971A636-A58C-4EF1-96ED-B24DECA7C422'-->
@@ -110,6 +110,12 @@
         <ComponentRef Id='QtStyleWindowsVista' />
         <ComponentRef Id='ProgramMenuDir' />
       </Feature>
+      <Feature Id="VCRedist" 
+          Title="Visual C++ 14.1 x64 Runtime" 
+          AllowAdvertise="no" 
+          Level="1">
+        <MergeRef Id="VCRedist"/>
+      </Feature>
     </Feature>
     
     <!-- Updater -->
@@ -142,5 +148,13 @@
      
     <WixVariable Id="WixUILicenseRtf" Value="RARStreamer\LICENSE.rtf" />
 
+    <!-- MSVC Redistributable -->
+    <DirectoryRef Id="TARGETDIR">
+      <Merge Id="VCRedist" 
+        SourceFile="$(var.VCMergeModule)" 
+        DiskId="1" 
+        Language="0"/>
+    </DirectoryRef>
+    
   </Product>
 </Wix>
