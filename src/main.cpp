@@ -15,8 +15,8 @@ int main(int argc, char *argv[])
     parser.addVersionOption();
     parser.addPositionalArgument("archive", "The first archive.");
 
-    //QCommandLineOption autoDirectory(QStringList() << "d" << "auto-directory", "Extracts to a rarstreamer_* subdirectory");
-    //parser.addOption(autoDirectory);
+    QCommandLineOption autoDirectory(QStringList() << "d" << "auto-directory", "Extracts to a rarstreamer_* subdirectory");
+    parser.addOption(autoDirectory);
     QCommandLineOption sameDirectory(QStringList() << "s" << "same-directory", "Extracts to the directory of the archive");
     parser.addOption(sameDirectory);
     QCommandLineOption outputDirectory(QStringList() << "o" << "output", "Sets the output directory", "dir");
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     if (args.size() > 0)
         inputFile = args.at(0);
     else
-        inputFile = QFileDialog::getOpenFileName(&w, "Open Archive");
+        inputFile = QFileDialog::getOpenFileName(&w, "Open Archive", QString(), "RAR Archives (*.rar);;All Files (*.*)");
 
     if (inputFile.isEmpty())
         exit(1);
@@ -54,17 +54,18 @@ int main(int argc, char *argv[])
         QFileInfo file(inputFile);
         extractDirectory = file.dir().path();
     }
-    else// if (parser.isSet(autoDirectory))
+    else if (parser.isSet(autoDirectory))
     {
         QFileInfo file(inputFile);
         QDir directory = file.dir();
         QString fileName = file.fileName();
         extractDirectory = directory.filePath("rarstream_"  + fileName);
     }
-    //else
-    //{
-    //    extractDirectory = QFileDialog::getExistingDirectory(&w, "Choose output directory");
-    //}
+    else
+    {
+        QFileInfo file(inputFile);
+        extractDirectory = QFileDialog::getExistingDirectory(&w, "Choose output directory", file.dir().path());
+    }
 
     if (extractDirectory.isEmpty())
         exit(1);
