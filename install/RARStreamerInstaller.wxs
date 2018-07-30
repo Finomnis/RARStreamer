@@ -74,7 +74,7 @@
       <Directory Id="DesktopFolder" Name="Desktop" />
     </Directory>
     
-    <Icon Id="RARStreamerIcon.exe" SourceFile="RARStreamer.exe" />
+    <Icon Id="RARStreamerIcon.exe" SourceFile="RARStreamer/RARStreamer.exe" />
     
     <Feature Id='Complete' Level='1'>
       <ComponentRef Id='MainExecutable' />
