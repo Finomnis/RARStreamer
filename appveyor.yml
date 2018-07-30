@@ -31,8 +31,8 @@ after_build:
   - ps: Copy-Item bin\LICENSE           -Destination RARStreamer\LICENSE.txt
   - ps: Copy-Item C:\UnRAR\license.txt  -Destination RARStreamer\USED_LICENSE_UNRAR.txt
   - 7z a RARStreamer.7z RARStreamer
-  - "C:\Program Files (x86)\WiX Toolset v3.11\bin\candle.exe" RARStreamerInstaller.wxs
-  - "C:\Program Files (x86)\WiX Toolset v3.11\bin\light.exe" RARStreamerInstaller.wixobj
+  - C:\PROGRA~2\WIXTOO~1.11\bin\candle.exe RARStreamerInstaller.wxs
+  - C:\PROGRA~2\WIXTOO~1.11\bin\light.exe RARStreamerInstaller.wixobj
   
 test: off
 
