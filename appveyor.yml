@@ -29,6 +29,7 @@ after_build:
   - ps: Copy-Item bin\RARStreamer.exe   -Destination RARStreamer\
   - ps: Copy-Item bin\USED_LICENSES.txt -Destination RARStreamer\
   - ps: Copy-Item bin\LICENSE           -Destination RARStreamer\LICENSE.txt
+  - ps: Copy-Item bin\LICENSE.rtf       -Destination RARStreamer\
   - ps: Copy-Item C:\UnRAR\license.txt  -Destination RARStreamer\USED_LICENSE_UNRAR.txt
   - 7z a RARStreamer.7z RARStreamer
   - C:\PROGRA~2\WIXTOO~1.11\bin\candle.exe RARStreamerInstaller.wxs
