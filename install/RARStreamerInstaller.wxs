@@ -87,6 +87,7 @@
     </Directory>
     
     <Icon Id="RARStreamerIcon.exe" SourceFile="RARStreamer/RARStreamer.exe" />
+    <Property Id="ARPPRODUCTICON" Value="RARStreamerIcon.exe" />
     
     <Feature Id='Complete' Level='1'>
       <ComponentRef Id='MainExecutable' />
