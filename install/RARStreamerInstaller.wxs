@@ -112,7 +112,8 @@
       </Feature>
       <Feature Id="VCRedist" 
           Title="Visual C++ 14.1 x64 Runtime" 
-          AllowAdvertise="no" 
+          AllowAdvertise="no"
+          Display="hidden"
           Level="1">
         <MergeRef Id="VCRedist"/>
       </Feature>
