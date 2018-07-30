@@ -2,12 +2,24 @@
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
 
   <!-- Name, Version, Language, etc. -->
-  <Product Name='RARStreamer' Manufacturer='Finomnis'
+  <Product
+    Name='RARStreamer'
+    Manufacturer='Finomnis'
     Id='2971A636-A58C-4EF1-96ED-B24DECA7C422' 
     UpgradeCode='2A75E76D-BF7B-4123-8F64-2CC6DC716F38'
-    Language='1033' Codepage='1252' Version='1.0.0'>
-    <Package Id='*' Keywords='Installer' Description="RARStreamer Installer" Manufacturer='Finomnis'
-      InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+    Language='1033'
+    Codepage='1252'
+    Version='1.0.0'>
+    <Package
+      Id='*'
+      Keywords='Installer'
+      Platform='x64'
+      Description="RARStreamer Installer"
+      Manufacturer='Finomnis'
+      InstallerVersion='100'
+      Languages='1033'
+      Compressed='yes'
+      SummaryCodepage='1252' />
     
     <!-- Obsolete nowadays, but still needs to be in here. Describes how data is stored on disks. -->
     <Media Id='1' Cabinet='data.cab' EmbedCab='yes' DiskPrompt='DATA #1' />
