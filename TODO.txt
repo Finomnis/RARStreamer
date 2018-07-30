@@ -1,0 +1,5 @@
+- continue tutorial -> uninstaller? probably not, double check with version number
+
+- UI for installer
+- context menu for rar
+- automatic version in msi from appveyor

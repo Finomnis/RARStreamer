@@ -32,7 +32,7 @@ after_build:
   - ps: Copy-Item C:\UnRAR\license.txt  -Destination RARStreamer\USED_LICENSE_UNRAR.txt
   - 7z a RARStreamer.7z RARStreamer
   - C:\PROGRA~2\WIXTOO~1.11\bin\candle.exe RARStreamerInstaller.wxs
-  - C:\PROGRA~2\WIXTOO~1.11\bin\light.exe RARStreamerInstaller.wixobj
+  - C:\PROGRA~2\WIXTOO~1.11\bin\light.exe -ext WixUIExtension RARStreamerInstaller.wixobj
   
 test: off
 
