@@ -90,9 +90,11 @@
       <!--Directory Id="DesktopFolder" Name="Desktop" /-->
     </Directory>
     
+    <!-- Icon -->
     <Icon Id="RARStreamerIcon.exe" SourceFile="RARStreamer\RARStreamer.exe" />
     <Property Id="ARPPRODUCTICON" Value="RARStreamerIcon.exe" />
     
+    <!-- Product Tree configuratoin -->
     <Feature Id='Complete' Title='RAR Streamer' Description='The complete package.' Display='expand' Level='1' ConfigurableDirectory='APPLICATIONFOLDER' AllowAdvertise='no' Absent='disallow'>      
       <ComponentRef Id='License' />
       <ComponentRef Id='UsedLicenses' />
@@ -109,6 +111,22 @@
       </Feature>
     </Feature>
     
+    <!-- Updater -->
+    <Upgrade Id='2A75E76D-BF7B-4123-8F64-2CC6DC716F38'>
+      <UpgradeVersion OnlyDetect='yes' Property='SELFFOUND'
+        Minimum="$(var.ProductVersion)" IncludeMinimum='yes'
+        Maximum="$(var.ProductVersion)" IncludeMaximum='yes' />
+      <UpgradeVersion OnlyDetect='yes' Property='NEWERFOUND'
+        Minimum="$(var.ProductVersion)" IncludeMinimum='no' />
+    </Upgrade>
+    <CustomAction Id='AlreadyUpdated' Error="RAR Streamer has already been updated to $(var.ProductVersion) or newer." />
+    <CustomAction Id='NoDowngrade' Error="A later version of RAR Streamer is already installed." />
+    <InstallExecuteSequence>
+      <Custom Action='AlreadyUpdated' After='FindRelatedProducts'>SELFFOUND</Custom>
+      <Custom Action='NoDowngrade' After='FindRelatedProducts'>NEWERFOUND</Custom>
+    </InstallExecuteSequence>
+    
+    <!-- UI -->
     <UIRef Id="WixUI_Mondo" />
     <UIRef Id="WixUI_ErrorProgressText" />
 
