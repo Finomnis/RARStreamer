@@ -82,10 +82,10 @@
               <!--RegistryValue Type="string" Name="Icon" Value="[$(var.ProductVersionWithName)]assets\Powershell_black.ico"/-->
             </RegistryKey>
             <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\a_normal">
-              <RegistryValue Type="string" Name="@" Value="Extract files..."/>
+              <RegistryValue Type="string" Value="Extract files..."/>
             </RegistryKey>
             <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\a_normal\command">
-              <RegistryValue Type="string" Name="@" Value="C:\Windows\notepad.exe"/>
+              <RegistryValue Type="string" Value="[#RARStreamerEXE]"/>
             </RegistryKey>
           </Component>
         </Directory>
