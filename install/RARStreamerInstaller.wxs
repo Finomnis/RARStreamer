@@ -131,9 +131,9 @@
         <ComponentRef Id='QtStyleWindowsVista' />
         <ComponentRef Id='ProgramMenuDir' />
       <!--/Feature-->
-      <Feature Id='ContextMenuItemsFeature' Title='Context Menu Entries' Description='Registers context menu entries for RAR archives.' Level='1' AllowAdvertise='no'>
+      <!-- Feature Id='ContextMenuItemsFeature' Title='Context Menu Entries' Description='Registers context menu entries for RAR archives.' Level='1' AllowAdvertise='no'-->
         <ComponentRef Id='ContextMenuItems' />
-      </Feature>
+      <!--/Feature-->
     </Feature>
         
     <Feature Id="VCRedist" 
