@@ -75,6 +75,19 @@
               <File Id='QtStyleWindowsVistaDLL' Name='qwindowsvistastyle.dll' DiskId='1' Source='RARStreamer\styles\qwindowsvistastyle.dll' ProcessorArchitecture='x64' KeyPath='yes' />
             </Component>
           </Directory>
+          <Component Id="ContextMenuItems" Guid='2A630B7C-A1A0-467B-8390-84FF8EA18008' Win64='yes'>
+            <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer">
+              <RegistryValue Type="string" Name="MUIVerb" Value="RAR Streamer"/>
+              <RegistryValue Type="string" Name="subcommands" Value=""/>
+              <!--RegistryValue Type="string" Name="Icon" Value="[$(var.ProductVersionWithName)]assets\Powershell_black.ico"/-->
+            </RegistryKey>
+            <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\a_normal">
+              <RegistryValue Type="string" Name="@" Value="Extract files..."/>
+            </RegistryKey>
+            <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\a_normal\command">
+              <RegistryValue Type="string" Name="@" Value="C:\Windows\notepad.exe"/>
+            </RegistryKey>
+          </Component>
         </Directory>
       </Directory>
       
@@ -117,6 +130,9 @@
         <ComponentRef Id='QtPlatformWindows' />
         <ComponentRef Id='QtStyleWindowsVista' />
         <ComponentRef Id='ProgramMenuDir' />
+      </Feature>
+      <Feature Id='ContextMenuItemsFeature' Title='Context Menu Entries' Description='Registers context menu entries for RAR archives.' Level='1' AllowAdvertise='no'>
+        <ComponentRef Id='ContextMenuItems' />
       </Feature>
     </Feature>
         
