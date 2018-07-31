@@ -6,8 +6,8 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    app.setApplicationName("RARStreamer");
-    app.setApplicationVersion("0.1");
+    app.setApplicationName("RAR Streamer");
+    app.setApplicationVersion(RARSTREAMER_VERSION);
 
     QCommandLineParser parser;
     parser.setApplicationDescription("Streams content from incomplete archives.");

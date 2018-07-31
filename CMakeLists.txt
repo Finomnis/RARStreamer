@@ -16,6 +16,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake/")
 find_package(Qt5Widgets REQUIRED)
 find_package(UnRAR REQUIRED)
 
+add_definitions(-DRARSTREAMER_VERSION="$ENV{APPVEYOR_BUILD_VERSION}")
+
 include_directories("${UnRAR_INCLUDE_DIR}")
 
 qt5_add_resources(QRCS resources.qrc)
