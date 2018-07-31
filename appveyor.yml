@@ -43,3 +43,16 @@ artifacts:
     name: RARStreamer
   - path: 'install\RARStreamerInstaller.msi'  # relative to repo root
     name: RARStreamerInstaller
+    
+deploy:
+  release: RARStreamer-v$(appveyor_build_version)
+  description: 'RARStreamer Installer'
+  provider: GitHub
+  auth_token:
+    secure: 78b007a84fc7013ad75d276107dadf3d0ef51b41 # your encrypted token from GitHub
+  artifact: 'install\RARStreamerInstaller.msi'        
+  draft: false
+  prerelease: false
+  on:
+    branch: master                 # release from master branch only
+    appveyor_repo_tag: true        # deploy on tag push only
