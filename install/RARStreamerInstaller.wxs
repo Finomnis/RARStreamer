@@ -79,10 +79,11 @@
             <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer">
               <RegistryValue Type="string" Name="MUIVerb" Value="RAR Streamer"/>
               <RegistryValue Type="string" Name="subcommands" Value=""/>
-              <!--RegistryValue Type="string" Name="Icon" Value="[$(var.ProductVersionWithName)]assets\Powershell_black.ico"/-->
+              <RegistryValue Type="string" Name="Icon" Value="[#RARStreamerEXE]"/>
             </RegistryKey>
             <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\a_normal">
               <RegistryValue Type="string" Value="Extract files..."/>
+              <RegistryValue Type="string" Name="Icon" Value="[#RARStreamerEXE]"/>
             </RegistryKey>
             <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\a_normal\command">
               <RegistryValue Type="string" Value='[#RARStreamerEXE] "%1"'/>
