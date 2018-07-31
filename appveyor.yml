@@ -49,7 +49,7 @@ deploy:
   description: 'RARStreamer Installer'
   provider: GitHub
   auth_token:
-    secure: LBX2R6pIlIbPMV+a6WRMjAYszaiy4EIWROzGOf/TNTusUnt4ScBiPmXMaVur4XJo # your encrypted token from GitHub
+    secure: qsIWcINGZGs+ToSD6GwqPTdVh+H2zlr5e5x+BvxQAubIpqAmGYy/TMj6S/f5niq3 # your encrypted token from GitHub
   artifact: 'install\RARStreamerInstaller.msi'        
   draft: false
   prerelease: false
