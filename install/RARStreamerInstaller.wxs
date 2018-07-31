@@ -79,7 +79,7 @@
             <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer">
               <RegistryValue Type="string" Name="MUIVerb" Value="RAR Streamer"/>
               <RegistryValue Type="string" Name="subcommands" Value=""/>
-              <RegistryValue Type="string" Name="Icon" Value="[#RARStreamerEXE]"/>
+              <RegistryValue Type="string" Name="Icon" Value="[APPLICATIONFOLDER]\RARStreamer.exe"/>
             </RegistryKey>
             <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\a_normal">
               <RegistryValue Type="string" Value="Extract files..."/>
@@ -90,12 +90,14 @@
             </RegistryKey>
             <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\b_here">
               <RegistryValue Type="string" Value="Extract Here"/>
+              <RegistryValue Type="string" Name="Icon" Value="[#RARStreamerEXE]"/>
             </RegistryKey>
             <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\b_here\command">
               <RegistryValue Type="string" Value='[#RARStreamerEXE] -s "%1"'/>
             </RegistryKey>
             <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\c_subdir">
               <RegistryValue Type="string" Value="Extract to rarstream\"/>
+              <RegistryValue Type="string" Name="Icon" Value="[#RARStreamerEXE]"/>
             </RegistryKey>
             <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\c_subdir\command">
               <RegistryValue Type="string" Value='[#RARStreamerEXE] -d "%1"'/>
