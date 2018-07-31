@@ -152,7 +152,8 @@
     </Feature>
         
     <Feature Id="VCRedist" 
-        Title="Visual C++ 14.1 x64 Runtime" 
+        Title="Visual C++ 14.1 x64 Runtime"
+        Description="The C++ Runtime Library for the program. If you don't know what this is, leave this one checked."
         AllowAdvertise="no"
         Level="1">
       <MergeRef Id="VCRedist"/>
