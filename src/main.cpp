@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     parser.addVersionOption();
     parser.addPositionalArgument("archive", "The first archive.");
 
-    QCommandLineOption autoDirectory(QStringList() << "d" << "auto-directory", "Extracts to a rarstreamer_* subdirectory");
+    QCommandLineOption autoDirectory(QStringList() << "d" << "auto-directory", "Extracts to a rarstream subdirectory");
     parser.addOption(autoDirectory);
     QCommandLineOption sameDirectory(QStringList() << "s" << "same-directory", "Extracts to the directory of the archive");
     parser.addOption(sameDirectory);
@@ -58,8 +58,7 @@ int main(int argc, char *argv[])
     {
         QFileInfo file(inputFile);
         QDir directory = file.dir();
-        QString fileName = file.fileName();
-        extractDirectory = directory.filePath("rarstream_"  + fileName);
+        extractDirectory = directory.filePath("rarstream");
     }
     else
     {

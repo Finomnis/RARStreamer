@@ -85,7 +85,19 @@
               <RegistryValue Type="string" Value="Extract files..."/>
             </RegistryKey>
             <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\a_normal\command">
-              <RegistryValue Type="string" Value="[#RARStreamerEXE]"/>
+              <RegistryValue Type="string" Value='[#RARStreamerEXE] "%1"'/>
+            </RegistryKey>
+            <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\b_here">
+              <RegistryValue Type="string" Value="Extract Here"/>
+            </RegistryKey>
+            <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\b_here\command">
+              <RegistryValue Type="string" Value='[#RARStreamerEXE] -s "%1"'/>
+            </RegistryKey>
+            <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\c_subdir">
+              <RegistryValue Type="string" Value="Extract to rarstream\"/>
+            </RegistryKey>
+            <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\c_subdir\command">
+              <RegistryValue Type="string" Value='[#RARStreamerEXE] -d "%1"'/>
             </RegistryKey>
           </Component>
         </Directory>
@@ -121,7 +133,7 @@
       <ComponentRef Id='License' />
       <ComponentRef Id='UsedLicenses' />
       <ComponentRef Id='UsedLicenseUnrar' />
-      <!--Feature Id='MainProgram' Title='Executable' Description='The main executable.' Level='1' AllowAdvertise='no' Absent='disallow'-->
+      <!--TODO Feature Id='MainProgram' Title='Executable' Description='The main executable.' Level='1' AllowAdvertise='no' Absent='disallow'-->
         <ComponentRef Id='MainExecutable' />
         <ComponentRef Id='Qt5CoreLibrary' />
         <ComponentRef Id='Qt5GuiLibrary' />
@@ -131,7 +143,7 @@
         <ComponentRef Id='QtStyleWindowsVista' />
         <ComponentRef Id='ProgramMenuDir' />
       <!--/Feature-->
-      <!-- Feature Id='ContextMenuItemsFeature' Title='Context Menu Entries' Description='Registers context menu entries for RAR archives.' Level='1' AllowAdvertise='no'-->
+      <!--TODO Feature Id='ContextMenuItemsFeature' Title='Context Menu Entries' Description='Registers context menu entries for RAR archives.' Level='1' AllowAdvertise='no'-->
         <ComponentRef Id='ContextMenuItems' />
       <!--/Feature-->
     </Feature>
