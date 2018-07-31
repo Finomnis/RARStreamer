@@ -117,11 +117,11 @@
     </DirectoryRef>
     
     <!-- Product Tree configuratoin -->
-    <Feature Id='Complete' Title='RAR Streamer' Description='The complete package.' Display='expand' Level='1' ConfigurableDirectory='APPLICATIONFOLDER' AllowAdvertise='no' Absent='disallow'>      
+    <Feature Id='Complete' Title='RAR Streamer' Description='The program package' Display='expand' Level='1' ConfigurableDirectory='APPLICATIONFOLDER' AllowAdvertise='no' Absent='disallow'>      
       <ComponentRef Id='License' />
       <ComponentRef Id='UsedLicenses' />
       <ComponentRef Id='UsedLicenseUnrar' />
-      <Feature Id='MainProgram' Title='Executable' Description='The main executable.' Level='1' AllowAdvertise='no' Absent='disallow'>
+      <!--Feature Id='MainProgram' Title='Executable' Description='The main executable.' Level='1' AllowAdvertise='no' Absent='disallow'-->
         <ComponentRef Id='MainExecutable' />
         <ComponentRef Id='Qt5CoreLibrary' />
         <ComponentRef Id='Qt5GuiLibrary' />
@@ -130,7 +130,7 @@
         <ComponentRef Id='QtPlatformWindows' />
         <ComponentRef Id='QtStyleWindowsVista' />
         <ComponentRef Id='ProgramMenuDir' />
-      </Feature>
+      <!--/Feature-->
       <Feature Id='ContextMenuItemsFeature' Title='Context Menu Entries' Description='Registers context menu entries for RAR archives.' Level='1' AllowAdvertise='no'>
         <ComponentRef Id='ContextMenuItems' />
       </Feature>
