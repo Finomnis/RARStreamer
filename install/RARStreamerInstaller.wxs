@@ -117,7 +117,7 @@
     </DirectoryRef>
     
     <!-- Product Tree configuratoin -->
-    <Feature Id='Complete' Title='RAR Streamer' Description='The program package' Display='expand' Level='1' ConfigurableDirectory='APPLICATIONFOLDER' AllowAdvertise='no' Absent='disallow'>      
+    <Feature Id='Complete' Title='RAR Streamer' Description='The program package.' Display='expand' Level='1' ConfigurableDirectory='APPLICATIONFOLDER' AllowAdvertise='no' Absent='disallow'>      
       <ComponentRef Id='License' />
       <ComponentRef Id='UsedLicenses' />
       <ComponentRef Id='UsedLicenseUnrar' />
