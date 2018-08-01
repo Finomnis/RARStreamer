@@ -179,7 +179,7 @@
     </InstallExecuteSequence>
     
     <!-- UI -->
-    <UIRef Id="WixUI_Mondo" />
+    <UIRef Id="WixUI_FeatureTree" />
     <UIRef Id="WixUI_ErrorProgressText" />
 
     <!-- Settings for WixUI_Advanced >
