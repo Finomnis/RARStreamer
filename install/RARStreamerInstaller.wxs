@@ -116,6 +116,15 @@
         </Directory>
       </Directory>
 
+      <Directory Id="DesktopFolder" Name="Desktop">
+        <Component Id="DesktopShortcut" Guid="9728D361-49E0-453B-B4AF-4607A81056E3">
+          <Shortcut Id="ApplicationDesktopShortcut" 
+              Name="RAR Streamer"
+              Target="[APPLICATIONFOLDER]RARStreamer.exe"
+              WorkingDirectory="APPLICATIONFOLDER"/>
+        </Component>
+      </Directory>
+      
       <!--Directory Id="DesktopFolder" Name="Desktop" /-->
     </Directory>
     
@@ -148,6 +157,9 @@
       </Feature>
       <Feature Id='ContextMenuItemsFeature' Title='Context Menu Entries' Description='Registers context menu entries for RAR archives.' Level='1' AllowAdvertise='no'>
         <ComponentRef Id='ContextMenuItems' />
+      </Feature>
+      <Feature Id='DesktopIconFeature' Title='Desktop Shortcut' Description='Creates a RAR Streamer shortcut on the desktop.' Level='1000' AllowAdvertise='no'>
+        <ComponentRef Id='DesktopShortcut' />
       </Feature>
     </Feature>
         
