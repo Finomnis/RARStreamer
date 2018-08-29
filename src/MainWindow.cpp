@@ -51,6 +51,8 @@ void MainWindow::updateStatus(const ExtractStatusMessage &message)
     //          << message.currentArchive.toStdString() << " | "
     //          << message.currentFile.toStdString() << " | "
     //          << message.currentFilePercent << std::endl;
+    if (!message.statusColor.isEmpty())
+        ui->label_status->setStyleSheet("background-color:" + message.statusColor);
     if (!message.status.isEmpty())
         ui->label_status->setText(message.status);
     if (!message.currentArchive.isEmpty())

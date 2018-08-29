@@ -9,6 +9,7 @@
 struct ExtractStatusMessage
 {
     QString status = QString();
+    QString statusColor = QString();
     QString currentFile = QString();
     QString currentArchive = QString();
     float currentFilePercent = std::numeric_limits<float>::infinity();

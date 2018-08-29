@@ -34,6 +34,7 @@ extern "C" {
 
                     ExtractStatusMessage msg;
                     msg.status = "Extracting ...";
+                    msg.statusColor = "#6600aa00";
                     msg.currentArchive = archive;
                     emit parent->updateGUI(msg);
 
@@ -48,6 +49,7 @@ extern "C" {
 
                         ExtractStatusMessage msg;
                         msg.status = "Waiting for next part ...";
+                        msg.statusColor = "#66aa8800";
                         msg.currentArchive = archive;
                         emit parent->updateGUI(msg);
 
@@ -71,6 +73,7 @@ extern "C" {
             {
                 ExtractStatusMessage msg;
                 msg.status = "Requesting password ...";
+                msg.statusColor = "#66aaaa00";
                 emit parent->updateGUI(msg);
                 emit parent->log(QString("Requesting password ..."));
             }
@@ -90,6 +93,7 @@ extern "C" {
             {
                 ExtractStatusMessage msg;
                 msg.status = "Extracting ...";
+                msg.statusColor = "#6600aa00";
                 emit parent->updateGUI(msg);
                 emit parent->log(QString("Got password. Extracting ..."));
             }
@@ -142,6 +146,7 @@ void WorkerThread::run()
     {
         ExtractStatusMessage msg;
         msg.status = "Opening ...";
+        msg.statusColor = "#660000aa";
         emit updateGUI(msg);
         emit log(QString("Opening archive '") + archive + QString("' ..."));
     }
@@ -178,6 +183,7 @@ void WorkerThread::run()
     {
         ExtractStatusMessage msg;
         msg.status = "Extracting ...";
+        msg.statusColor = "#6600aa00";
         msg.currentArchive = extractFilename((wchar_t *)archiveName.c_str());
         emit updateGUI(msg);
     }
@@ -237,6 +243,7 @@ void WorkerThread::run()
     {
         ExtractStatusMessage msg;
         msg.status = "Finished.";
+        msg.statusColor = "#66006622";
         emit updateGUI(msg);
         emit log(QString("Finished."));
     }
@@ -244,6 +251,7 @@ void WorkerThread::run()
     {
         ExtractStatusMessage msg;
         msg.status = "Canceled.";
+        msg.statusColor = "#66660000";
         emit updateGUI(msg);
         emit log(QString("Canceled."));
     }
