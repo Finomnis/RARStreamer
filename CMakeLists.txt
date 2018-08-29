@@ -16,23 +16,25 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake/")
 find_package(Qt5Widgets REQUIRED)
 find_package(UnRAR REQUIRED)
 
+add_definitions(-DRARSTREAMER_VERSION="$ENV{APPVEYOR_BUILD_VERSION}")
+
 include_directories("${UnRAR_INCLUDE_DIR}")
 
 qt5_add_resources(QRCS resources.qrc)
 
 add_executable(RARStreamer
-    main.cpp
-    MainWindow.h
-    MainWindow.cpp
-    MainWindow.ui
-    PasswordDialog.h
-    PasswordDialog.cpp
-    PasswordDialog.ui
-    WorkerThread.h
-    WorkerThread.cpp
-    ProgressTracker.h
-    ProgressTracker.cpp
-    UnRarHelpers.h
+    src/main.cpp
+    src/MainWindow.h
+    src/MainWindow.cpp
+    src/MainWindow.ui
+    src/PasswordDialog.h
+    src/PasswordDialog.cpp
+    src/PasswordDialog.ui
+    src/WorkerThread.h
+    src/WorkerThread.cpp
+    src/ProgressTracker.h
+    src/ProgressTracker.cpp
+    src/UnRarHelpers.h
     ${QRCS}
     ${OS_SPECIFICS}
 )
@@ -43,3 +45,4 @@ install(TARGETS RARStreamer DESTINATION bin)
 install(FILES ${UnRAR_RUNTIME_LIBRARY} DESTINATION bin)
 install(FILES ${CMAKE_SOURCE_DIR}/USED_LICENSES.txt DESTINATION bin)
 install(FILES ${CMAKE_SOURCE_DIR}/LICENSE DESTINATION bin)
+install(FILES ${CMAKE_SOURCE_DIR}/LICENSE.rtf DESTINATION bin)

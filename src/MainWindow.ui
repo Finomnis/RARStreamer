@@ -11,10 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>RARStreamer</string>
+   <string>RAR Streamer</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="resources.qrc">
+   <iconset resource="../resources.qrc">
     <normaloff>:/resources/icon.png</normaloff>:/resources/icon.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -117,7 +117,7 @@
      </font>
     </property>
     <property name="text">
-     <string>RARStreamer</string>
+     <string>RAR Streamer</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -225,7 +225,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../resources.qrc"/>
  </resources>
  <connections/>
 </ui>

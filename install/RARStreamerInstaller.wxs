@@ -1,0 +1,213 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+
+  <!-- Variables -->
+  <?define ProductVersion = "$(env.APPVEYOR_BUILD_VERSION)" ?>
+  <?define VCMergeModule = "$(env.VCToolsRedistDir)MergeModules\Microsoft_VC141_CRT_x64.msm" ?>
+  
+  <!-- Name, Version, Language, etc. -->
+  <!--Id='2971A636-A58C-4EF1-96ED-B24DECA7C422'-->
+  <Product
+    Name='RAR Streamer'
+    Manufacturer='Finomnis'
+    Id='*'
+    UpgradeCode='2A75E76D-BF7B-4123-8F64-2CC6DC716F38'
+    Language='1033'
+    Codepage='1252'
+    Version="$(var.ProductVersion)">
+    <Package
+      Id='*'
+      Keywords='Installer'
+      Platform='x64'
+      Description="RAR Streamer Installer"
+      Manufacturer='Finomnis'
+      InstallerVersion='405'
+      Languages='1033'
+      Compressed='yes'
+      SummaryCodepage='1252' />
+    
+    <!-- Obsolete nowadays, but still needs to be in here. Describes how data is stored on disks. -->
+    <Media Id='1' Cabinet='data.cab' EmbedCab='yes' DiskPrompt='DATA #1' />
+    <Property Id='DiskPrompt' Value="RARStreamer Installation [1]" />
+    
+    <!-- The actual files -->
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      
+      <!-- Program Files -->
+      <Directory Id='ProgramFiles64Folder' Name='PFiles'>
+        <Directory Id='APPLICATIONFOLDER' Name='RAR Streamer'>
+          <Component Id='MainExecutable' Guid='81FC435D-B7B8-446A-880B-9D0043A54977' Win64='yes'>
+            <File Id='RARStreamerEXE' Name='RARStreamer.exe' DiskId='1' Source='RARStreamer\RARStreamer.exe' ProcessorArchitecture='x64' KeyPath='yes'>
+              <Shortcut Id="startmenuRARStreamer" Directory="ProgramMenuDir" Name="RAR Streamer"
+                WorkingDirectory='APPLICATIONFOLDER' Icon="RARStreamerIcon.exe" IconIndex="0" Advertise="yes" />
+              <!--Shortcut Id="desktopRARStreamer" Directory="DesktopFolder" Name="RAR Streamer"
+                WorkingDirectory='APPLICATIONFOLDER' Icon="RARStreamerIcon.exe" IconIndex="0" Advertise="yes" /-->
+            </File>
+          </Component>
+          <Component Id='Qt5CoreLibrary' Guid='7E3DF199-7463-411C-A600-28C0941EE12C' Win64='yes'>
+            <File Id='Qt5CoreDLL' Name='Qt5Core.dll' DiskId='1' Source='RARStreamer\Qt5Core.dll' ProcessorArchitecture='x64' KeyPath='yes' />
+          </Component>
+          <Component Id='Qt5GuiLibrary' Guid='69F75682-6631-4154-80D1-5D68E9C3EF17' Win64='yes'>
+            <File Id='Qt5GuiDLL' Name='Qt5Gui.dll' DiskId='1' Source='RARStreamer\Qt5Gui.dll' ProcessorArchitecture='x64' KeyPath='yes' />
+          </Component>
+          <Component Id='Qt5WidgetsLibrary' Guid='9827430E-5E20-42D8-9D87-31C21DEE09A1' Win64='yes'>
+            <File Id='Qt5WidgetsDLL' Name='Qt5Widgets.dll' DiskId='1' Source='RARStreamer\Qt5Widgets.dll' ProcessorArchitecture='x64' KeyPath='yes' />
+          </Component>
+          <Component Id='UnRAR64Library' Guid='ABBBB762-36E1-481D-BBC7-8D105854AAD3' Win64='yes'>
+            <File Id='UnRAR64DLL' Name='UnRAR64.dll' DiskId='1' Source='RARStreamer\UnRAR64.dll' ProcessorArchitecture='x64' KeyPath='yes' />
+          </Component>
+          <Component Id='License' Guid='8B5DD691-1A82-4BFD-9E54-CC56B19FA375' Win64='yes'>
+            <File Id='LicenseTXT' Name='LICENSE.txt' DiskId='1' Source='RARStreamer\LICENSE.txt' ProcessorArchitecture='x64' KeyPath='yes' />
+          </Component>
+          <Component Id='UsedLicenses' Guid='B8537609-AE0E-461E-938F-D10737FD7891' Win64='yes'>
+            <File Id='UsedLicensesTXT' Name='USED_LICENSES.txt' DiskId='1' Source='RARStreamer\USED_LICENSES.txt' KeyPath='yes' />
+          </Component>
+          <Component Id='UsedLicenseUnrar' Guid='CBC6EFBB-6F3B-4E32-940E-995A66761E47' Win64='yes'>
+            <File Id='UsedLicenseUnrarTXT' Name='USED_LICENSE_UNRAR.txt' DiskId='1' Source='RARStreamer\USED_LICENSE_UNRAR.txt' KeyPath='yes' />
+          </Component>
+          <Directory Id='QtPlatforms' Name='platforms'>
+            <Component Id='QtPlatformWindows' Guid='B28D995E-18E8-4379-A96C-B9D5280CE07E' Win64='yes'>
+              <File Id='QtPlatformWindowsDLL' Name='qwindows.dll' DiskId='1' Source='RARStreamer\platforms\qwindows.dll' ProcessorArchitecture='x64' KeyPath='yes' />
+            </Component>
+          </Directory>
+          <Directory Id='QtStyles' Name='styles'>
+            <Component Id='QtStyleWindowsVista' Guid='D8B55060-05C2-453E-A544-9949FFB7927F' Win64='yes'>
+              <File Id='QtStyleWindowsVistaDLL' Name='qwindowsvistastyle.dll' DiskId='1' Source='RARStreamer\styles\qwindowsvistastyle.dll' ProcessorArchitecture='x64' KeyPath='yes' />
+            </Component>
+          </Directory>
+          <Component Id="ContextMenuItems" Guid='2A630B7C-A1A0-467B-8390-84FF8EA18008' Win64='yes'>
+            <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer">
+              <RegistryValue Type="string" Name="MUIVerb" Value="RAR Streamer"/>
+              <RegistryValue Type="string" Name="subcommands" Value=""/>
+              <RegistryValue Type="string" Name="Icon" Value="[APPLICATIONFOLDER]RARStreamer.exe"/>
+            </RegistryKey>
+            <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\a_normal">
+              <RegistryValue Type="string" Value="Extract files..."/>
+              <RegistryValue Type="string" Name="Icon" Value="[APPLICATIONFOLDER]RARStreamer.exe"/>
+            </RegistryKey>
+            <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\a_normal\command">
+              <RegistryValue Type="string" Value='[APPLICATIONFOLDER]RARStreamer.exe "%1"'/>
+            </RegistryKey>
+            <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\b_here">
+              <RegistryValue Type="string" Value="Extract Here"/>
+              <RegistryValue Type="string" Name="Icon" Value="[APPLICATIONFOLDER]RARStreamer.exe"/>
+            </RegistryKey>
+            <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\b_here\command">
+              <RegistryValue Type="string" Value='[APPLICATIONFOLDER]RARStreamer.exe -s "%1"'/>
+            </RegistryKey>
+            <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\c_subdir">
+              <RegistryValue Type="string" Value="Extract to rarstream\"/>
+              <RegistryValue Type="string" Name="Icon" Value="[APPLICATIONFOLDER]RARStreamer.exe"/>
+            </RegistryKey>
+            <RegistryKey Root="HKCR" Key="SystemFileAssociations\.rar\shell\rarstreamer\shell\c_subdir\command">
+              <RegistryValue Type="string" Value='[APPLICATIONFOLDER]RARStreamer.exe -d "%1"'/>
+            </RegistryKey>
+          </Component>
+        </Directory>
+      </Directory>
+      
+      <!-- Start Menu and Uninstall -->
+      <Directory Id="ProgramMenuFolder" Name="Programs">
+        <Directory Id="ProgramMenuDir" Name="RAR Streamer">
+          <Component Id="ProgramMenuDir" Guid="130B0B79-ECBB-4963-A9DF-EC46E732EFAE">
+              <RemoveFolder Id='ProgramMenuDir' On='uninstall' />
+              <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string' Value='' KeyPath='yes' />
+          </Component>
+        </Directory>
+      </Directory>
+
+      <Directory Id="DesktopFolder" Name="Desktop">
+        <Component Id="DesktopShortcut" Guid="9728D361-49E0-453B-B4AF-4607A81056E3">
+          <Shortcut Id="ApplicationDesktopShortcut" 
+              Name="RAR Streamer"
+              Target="[APPLICATIONFOLDER]RARStreamer.exe"
+              WorkingDirectory="APPLICATIONFOLDER"/>
+            <RemoveFolder Id="DesktopFolder" On="uninstall"/>
+            <RegistryValue
+                Root="HKCU"
+                Key="Software\[Manufacturer]\[ProductName]"
+                Name="desktopIcon"
+                Type="integer"
+                Value="1"
+                KeyPath="yes"/>
+        </Component>
+      </Directory>
+      
+      <!--Directory Id="DesktopFolder" Name="Desktop" /-->
+    </Directory>
+    
+    <!-- Icon -->
+    <Icon Id="RARStreamerIcon.exe" SourceFile="RARStreamer\RARStreamer.exe" />
+    <Property Id="ARPPRODUCTICON" Value="RARStreamerIcon.exe" />
+    
+    <!-- MSVC Redistributable -->
+    <DirectoryRef Id="TARGETDIR">
+      <Merge Id="VCRedist" 
+        SourceFile="$(var.VCMergeModule)" 
+        DiskId="1" 
+        Language="0"/>
+    </DirectoryRef>
+    
+    <!-- Product Tree configuratoin -->
+    <Feature Id='Complete' Title='RAR Streamer' Description='The program package.' Display='expand' Level='1' ConfigurableDirectory='APPLICATIONFOLDER' AllowAdvertise='no' Absent='disallow'>      
+      <ComponentRef Id='License' />
+      <ComponentRef Id='UsedLicenses' />
+      <ComponentRef Id='UsedLicenseUnrar' />
+      <Feature Id='MainProgram' Title='Executable' Description='The main executable.' Level='1' AllowAdvertise='no' Absent='disallow'>
+        <ComponentRef Id='MainExecutable' />
+        <ComponentRef Id='Qt5CoreLibrary' />
+        <ComponentRef Id='Qt5GuiLibrary' />
+        <ComponentRef Id='Qt5WidgetsLibrary' />
+        <ComponentRef Id='UnRAR64Library' />
+        <ComponentRef Id='QtPlatformWindows' />
+        <ComponentRef Id='QtStyleWindowsVista' />
+        <ComponentRef Id='ProgramMenuDir' />
+      </Feature>
+      <Feature Id='ContextMenuItemsFeature' Title='Context Menu Entries' Description='Registers context menu entries for RAR archives.' Level='1' AllowAdvertise='no'>
+        <ComponentRef Id='ContextMenuItems' />
+      </Feature>
+      <Feature Id='DesktopIconFeature' Title='Desktop Shortcut' Description='Creates a RAR Streamer shortcut on the desktop.' Level='1000' AllowAdvertise='no'>
+        <ComponentRef Id='DesktopShortcut' />
+      </Feature>
+    </Feature>
+        
+    <Feature Id="VCRedist" 
+        Title="Visual C++ 14.1 x64 Runtime"
+        Description="The C++ Runtime Library for the program. If you don't know what this is, leave this one checked."
+        AllowAdvertise="no"
+        Level="1">
+      <MergeRef Id="VCRedist"/>
+    </Feature>
+    
+    <!-- Updater -->
+    <Upgrade Id='2A75E76D-BF7B-4123-8F64-2CC6DC716F38'>
+      <UpgradeVersion OnlyDetect='yes' Property='SELFFOUND'
+        Minimum="$(var.ProductVersion)" IncludeMinimum='yes'
+        Maximum="$(var.ProductVersion)" IncludeMaximum='yes' />
+      <UpgradeVersion OnlyDetect='yes' Property='NEWERFOUND'
+        Minimum="$(var.ProductVersion)" IncludeMinimum='no' />
+      <UpgradeVersion OnlyDetect='no' Property='PREVIOUSFOUND'
+        Minimum='1.0.0' IncludeMinimum='yes'
+        Maximum="$(var.ProductVersion)" IncludeMaximum='no' />
+    </Upgrade>
+    <CustomAction Id='AlreadyUpdated' Error="RAR Streamer has already been updated to $(var.ProductVersion) or newer." />
+    <CustomAction Id='NoDowngrade' Error="A later version of RAR Streamer is already installed." />
+    <InstallExecuteSequence>
+      <Custom Action='AlreadyUpdated' After='FindRelatedProducts'>SELFFOUND</Custom>
+      <Custom Action='NoDowngrade' After='FindRelatedProducts'>NEWERFOUND</Custom>
+      <RemoveExistingProducts Before="InstallInitialize" />
+    </InstallExecuteSequence>
+    
+    <!-- UI -->
+    <UIRef Id="WixUI_FeatureTree" />
+    <UIRef Id="WixUI_ErrorProgressText" />
+
+    <!-- Settings for WixUI_Advanced >
+    <Property Id="ApplicationFolderName" Value="RAR Streamer" />
+    <Property Id="WixAppFolder" Value="WixPerMachineFolder" />
+    <WixVariable Id="WixUISupportPerUser" Value="0" /-->
+     
+    <WixVariable Id="WixUILicenseRtf" Value="RARStreamer\LICENSE.rtf" />
+    
+  </Product>
+</Wix>

@@ -2,6 +2,7 @@ image: Visual Studio 2017
 
 init:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
+  - SET
 
 install:
   - ps: Start-FileDownload https://www.rarlab.com/rar/UnRARDLL.exe C:\UnRARDLL.exe
@@ -29,12 +30,16 @@ after_build:
   - ps: Copy-Item bin\RARStreamer.exe   -Destination RARStreamer\
   - ps: Copy-Item bin\USED_LICENSES.txt -Destination RARStreamer\
   - ps: Copy-Item bin\LICENSE           -Destination RARStreamer\LICENSE.txt
+  - ps: Copy-Item bin\LICENSE.rtf       -Destination RARStreamer\
   - ps: Copy-Item C:\UnRAR\license.txt  -Destination RARStreamer\USED_LICENSE_UNRAR.txt
-  
   - 7z a RARStreamer.7z RARStreamer
+  - C:\PROGRA~2\WIXTOO~1.11\bin\candle.exe RARStreamerInstaller.wxs
+  - C:\PROGRA~2\WIXTOO~1.11\bin\light.exe -ext WixUIExtension RARStreamerInstaller.wixobj
   
 test: off
 
 artifacts:
   - path: 'install\RARStreamer.7z'  # relative to repo root
     name: RARStreamer
+  - path: 'install\RARStreamerInstaller.msi'  # relative to repo root
+    name: RARStreamerInstaller
