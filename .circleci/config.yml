@@ -20,6 +20,17 @@ jobs:
                     - unrar/dll.hpp
                     - unrar/libunrar.a
 
+    build-rarstreamer:
+        executor: linux
+        steps:
+            - checkout
+            - attach_workspace:
+                at: /tmp/workspace
+            - run: mkdir build
+            - run:
+                command: cmake -DUNRAR_ROOT=/tmp/workspace/unrar ..
+                working_directory: unrar
+
 workflows:
     version: 2.1
     build:
