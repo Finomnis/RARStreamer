@@ -10,8 +10,10 @@ jobs:
         executor: linux
         steps:
             - run: git glone git@github.com:pmachapman/unrar.git
-            - run: make lib
+            - run:
+                command: make lib
                 working_directory: unrar
+
             - persist_to_workspace:
                 root: .
                 paths:
