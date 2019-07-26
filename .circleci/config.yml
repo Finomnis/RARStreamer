@@ -26,8 +26,7 @@ jobs:
             - checkout
             - attach_workspace:
                 at: /tmp/workspace
-            - run: sudo apt update
-            - run: sudo apt install cmake
+            - run: sudo apt update; sudo apt install cmake qt5-default
             - run: mkdir build
             - run:
                 command: cmake -DUNRAR_ROOT=/tmp/workspace/unrar ..
