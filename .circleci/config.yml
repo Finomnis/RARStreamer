@@ -31,6 +31,9 @@ jobs:
             - run:
                 command: cmake -DUNRAR_ROOT=/tmp/workspace/unrar ..
                 working_directory: unrar
+            - run:
+                command: make
+                working_directory: unrar
 
 workflows:
     version: 2.1
