@@ -1,0 +1,19 @@
+version: 2.1
+
+executors:
+    linux:
+        docker:
+            - image: circleci/buildpack-deps:bionic
+
+jobs:
+    build-unrar:
+        executor: linux
+        steps:
+            - run: git glone git@github.com:pmachapman/unrar.git
+            - run: make lib
+                working_directory: unrar
+            - persist_to_workspace:
+                root: .
+                paths:
+                    - unrar/dll.hpp
+                    - unrar/libunrar.a
