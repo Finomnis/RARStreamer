@@ -26,6 +26,8 @@ jobs:
             - checkout
             - attach_workspace:
                 at: /tmp/workspace
+            - run: sudo apt update
+            - run: sudo apt install cmake
             - run: mkdir build
             - run:
                 command: cmake -DUNRAR_ROOT=/tmp/workspace/unrar ..
