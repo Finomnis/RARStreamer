@@ -28,7 +28,7 @@ jobs:
                 at: /tmp/workspace
             - run: sudo apt update; sudo apt install cmake qt5-default
             - run:
-                command: cmake -DUNRAR_ROOT=/tmp/workspace/unrar ..
+                command: cmake -DCMAKE_BUILD_TYPE=Release -DUNRAR_ROOT=/tmp/workspace/unrar ..
                 working_directory: build
             - run:
                 command: make
