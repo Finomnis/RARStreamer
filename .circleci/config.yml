@@ -27,19 +27,14 @@ jobs:
             - attach_workspace:
                 at: /tmp/workspace
             - run: sudo apt update; sudo apt install cmake qt5-default
-            - run: mkdir build
             - run:
                 command: cmake -DUNRAR_ROOT=/tmp/workspace/unrar ..
-                working_directory: unrar
+                working_directory: build
             - run:
                 command: make
-                working_directory: unrar
-            - run:
-                command: RARStreamer --help
-                working_directory: unrar
-            - run:
-                command: RARStreamer --version
-                working_directory: unrar
+                working_directory: build
+            - run: ./build/RARStreamer --help
+            - run: ./build/RARStreamer --version
 
 workflows:
     version: 2.1
