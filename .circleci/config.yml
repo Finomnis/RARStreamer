@@ -9,7 +9,7 @@ jobs:
     build-unrar:
         executor: linux
         steps:
-            - run: git clone git@github.com:pmachapman/unrar.git
+            - run: git clone https://github.com/pmachapman/unrar.git
             - run:
                 command: make lib
                 working_directory: unrar
