@@ -47,7 +47,9 @@ add_executable(RARStreamer
 target_link_libraries(RARStreamer Qt5::Widgets "${UnRAR_LIBRARIES}" "${EXTRA_LINKER_FLAGS}")
 
 install(TARGETS RARStreamer DESTINATION bin)
-install(FILES ${UnRAR_RUNTIME_LIBRARIES} DESTINATION bin)
+if(WIN32)
+    install(FILES ${UnRAR_RUNTIME_LIBRARIES} DESTINATION bin)
+endif(WIN32)
 install(FILES ${CMAKE_SOURCE_DIR}/Used_Licenses.txt DESTINATION bin)
 install(FILES ${CMAKE_SOURCE_DIR}/LICENSE DESTINATION bin)
 install(FILES ${CMAKE_SOURCE_DIR}/LICENSE.rtf DESTINATION bin)

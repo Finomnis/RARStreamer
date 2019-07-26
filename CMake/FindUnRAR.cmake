@@ -33,13 +33,15 @@ find_library(UnRAR_LIBRARY
 )
 message("UnRAR Library: ${UnRAR_LIBRARY}")
 
-find_file(UnRAR_RUNTIME_LIBRARY 
-    NAMES ${UnRAR_LIBRARY_NAME}.dll libunrar.so
-    PATHS ${UnRAR_ROOT_DIR}
-    PATH_SUFFIXES "x64"
-    DOC "The UnRAR runtime library"
-)
-message("UnRAR Runtime Library: ${UnRAR_RUNTIME_LIBRARY}")
+if (WIN32)
+    find_file(UnRAR_RUNTIME_LIBRARY 
+        NAMES ${UnRAR_LIBRARY_NAME}.dll libunrar.so
+        PATHS ${UnRAR_ROOT_DIR}
+        PATH_SUFFIXES "x64"
+        DOC "The UnRAR runtime library"
+    )
+    message("UnRAR Runtime Library: ${UnRAR_RUNTIME_LIBRARY}")
+endif()
 
 include(FindPackageHandleStandardArgs)
 # handle the QUIETLY and REQUIRED arguments and set LOGGING_FOUND to TRUE
