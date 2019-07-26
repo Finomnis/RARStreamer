@@ -35,6 +35,9 @@ jobs:
                 working_directory: build
             - run: ./build/RARStreamer --help
             - run: ./build/RARStreamer --version
+            - store-artifacts:
+                path: build/RARStreamer
+                destination: exe
 
 workflows:
     version: 2.1
