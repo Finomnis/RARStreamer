@@ -34,6 +34,12 @@ jobs:
             - run:
                 command: make
                 working_directory: unrar
+            - run:
+                command: RARStreamer --help
+                working_directory: unrar
+            - run:
+                command: RARStreamer --version
+                working_directory: unrar
 
 workflows:
     version: 2.1
