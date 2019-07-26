@@ -1,12 +1,14 @@
 #include "MainWindow.h"
-#include "ui_mainwindow.h"
+#include "ui_MainWindow.h"
 
 #include "PasswordDialog.h"
 
 #include <QMessageBox>
 #include <QFileInfo>
 #include <QDir>
+
 #include <iostream>
+#include <cmath>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

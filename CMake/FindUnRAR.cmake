@@ -10,8 +10,9 @@ endif()
 
 set(UnRAR_ROOT_DIR ${UNRAR_ROOT})
 
+# message("Searching in '${UnRAR_ROOT_DIR}' ...")
 find_path(UnRAR_INCLUDE_DIR
-    NAMES unrar.h
+    NAMES unrar.h dll.hpp
     PATHS ${UnRAR_ROOT_DIR}
     DOC "The UnRAR include directory"
 )
@@ -25,7 +26,7 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 8)
 endif()
 
 find_library(UnRAR_LIBRARY 
-    NAMES ${UnRAR_LIBRARY_NAME}.lib
+    NAMES ${UnRAR_LIBRARY_NAME}.lib libunrar.a
     PATHS ${UnRAR_ROOT_DIR}
     PATH_SUFFIXES "x64"
     DOC "The UnRAR library"
@@ -33,7 +34,7 @@ find_library(UnRAR_LIBRARY
 message("UnRAR Library: ${UnRAR_LIBRARY}")
 
 find_file(UnRAR_RUNTIME_LIBRARY 
-    NAMES ${UnRAR_LIBRARY_NAME}.dll
+    NAMES ${UnRAR_LIBRARY_NAME}.dll libunrar.so
     PATHS ${UnRAR_ROOT_DIR}
     PATH_SUFFIXES "x64"
     DOC "The UnRAR runtime library"

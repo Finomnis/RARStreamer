@@ -18,7 +18,12 @@ find_package(UnRAR REQUIRED)
 
 add_definitions(-DRARSTREAMER_VERSION="$ENV{APPVEYOR_BUILD_VERSION}")
 
-include_directories("${UnRAR_INCLUDE_DIR}")
+if (UNIX)
+    add_definitions(-D_UNIX)
+    set(EXTRA_LINKER_FLAGS "-pthread")
+endif (UNIX)
+
+include_directories("${UnRAR_INCLUDE_DIRS}")
 
 qt5_add_resources(QRCS resources.qrc)
 
@@ -39,10 +44,10 @@ add_executable(RARStreamer
     ${OS_SPECIFICS}
 )
 
-target_link_libraries(RARStreamer Qt5::Widgets "${UnRAR_LIBRARY}")
+target_link_libraries(RARStreamer Qt5::Widgets "${UnRAR_LIBRARIES}" "${EXTRA_LINKER_FLAGS}")
 
 install(TARGETS RARStreamer DESTINATION bin)
-install(FILES ${UnRAR_RUNTIME_LIBRARY} DESTINATION bin)
+install(FILES ${UnRAR_RUNTIME_LIBRARIES} DESTINATION bin)
 install(FILES ${CMAKE_SOURCE_DIR}/Used_Licenses.txt DESTINATION bin)
 install(FILES ${CMAKE_SOURCE_DIR}/LICENSE DESTINATION bin)
 install(FILES ${CMAKE_SOURCE_DIR}/LICENSE.rtf DESTINATION bin)

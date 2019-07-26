@@ -2,8 +2,10 @@
 
 #ifdef OS_WINDOWS
 #include <windows.h>
-#endif
 #include <unrar.h>
+#else
+#include <dll.hpp>
+#endif
 
 #include <QString>
 #include <set>

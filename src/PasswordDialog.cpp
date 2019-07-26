@@ -1,5 +1,5 @@
 #include "PasswordDialog.h"
-#include "ui_passworddialog.h"
+#include "ui_PasswordDialog.h"
 
 #include <QMessageBox>
 #include <QFileInfo>
