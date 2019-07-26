@@ -19,3 +19,9 @@ jobs:
                 paths:
                     - unrar/dll.hpp
                     - unrar/libunrar.a
+
+workflows:
+    version: 2.1
+    build:
+        jobs:
+            - build-unrar
