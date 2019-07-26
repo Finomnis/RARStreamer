@@ -36,3 +36,6 @@ workflows:
     build:
         jobs:
             - build-unrar
+            - build-rarstreamer:
+                requires:
+                    - build-unrar
