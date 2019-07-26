@@ -46,7 +46,11 @@ endif()
 include(FindPackageHandleStandardArgs)
 # handle the QUIETLY and REQUIRED arguments and set LOGGING_FOUND to TRUE
 # if all listed variables are TRUE
-find_package_handle_standard_args(UnRAR DEFAULT_MSG UnRAR_INCLUDE_DIR UnRAR_LIBRARY UnRAR_RUNTIME_LIBRARY)
+if (WIN32)
+    find_package_handle_standard_args(UnRAR DEFAULT_MSG UnRAR_INCLUDE_DIR UnRAR_LIBRARY UnRAR_RUNTIME_LIBRARY)
+else()
+    find_package_handle_standard_args(UnRAR DEFAULT_MSG UnRAR_INCLUDE_DIR UnRAR_LIBRARY)
+endif()
 
 if (UnRAR_FOUND)
     set(UnRAR_LIBRARIES ${UnRAR_LIBRARY} )
